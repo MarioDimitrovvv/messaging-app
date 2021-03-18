@@ -1,0 +1,15 @@
+.header {
+    background-color: brown;
+    padding: 15px;
+    padding-bottom: 5vh;
+    .header-child{
+        float: left;
+        margin-left: 20%;
+        cursor: pointer;
+        text-decoration: none;
+        color: black;
+    }
+    .used-link {
+        color: azure;
+    }
+}
