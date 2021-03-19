@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react';
 
-import login from '../../actions/authActions';
+import {login, register} from '../../actions/authActions';
 
 import './Auth.scss';
 
@@ -11,11 +11,22 @@ const Auth = (props) => {
     const [isRegister, setIsRegister] = useState(true);
     const [formData, setFormData] = useState(baseFormData);
 
-    const onSubmitHandler = (e) => {
+    const onSubmitHandler = async (e) => {
         e.preventDefault();
+        // Validate Inputs and send notification msg!!!
         //Call history.push('/')
-        login(formData)
-        console.log(formData);
+        try {
+            if(isRegister) {
+                console.log('in Auth.js');
+                await register(formData);
+            } else {
+                await login(formData);
+            }
+            props.history.push('/');
+        } catch (error) {
+            //Send notification msg
+            console.log(error);
+        }
     }
 
     const handleChange = (e) => {
@@ -24,7 +35,10 @@ const Auth = (props) => {
     
     const handlePassword = () => setShowPassword((prevShowPassword) => !prevShowPassword);
 
-    const handleIsRegister = () => setIsRegister((prevIsRegister) => !prevIsRegister);
+    const handleIsRegister = () => {
+        setIsRegister((prevIsRegister) => !prevIsRegister);
+        setFormData(baseFormData);
+    };
 
     return (
         <Fragment>
@@ -55,7 +69,7 @@ const Auth = (props) => {
                     <Fragment>
                         <div>
                             <label htmlFor="secondName">Repeat Password</label>
-                            <input id="repeatedPassword" onChange={handleChange} type={showPassword ? "text" : "password"} name="repeatedPassword" required />
+                            <input id="repeatedPassword" onChange={handleChange} type={showPassword ? "text" : "password"} name="repeatPassword" required />
                         </div>
                     </Fragment>
                 )}

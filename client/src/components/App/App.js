@@ -2,18 +2,18 @@ import { useState, useEffect } from 'react';
 
 import { Route, Switch } from 'react-router-dom';
 
-import Header from './components/Header';
-import Main from './components/Main';
-import Auth from './components/Auth';
+import Header from '../Header';
+import Main from '../Main';
+import Auth from '../Auth';
 
 import './App.css'
 
 function App() {
     const [messages, setMessages] = useState([]);
 
-    useEffect(() => {
-        demo();
-    }, [messages]);
+    // useEffect(() => {
+    //     demo();
+    // }, [messages]);
 
     const demo = () => {
         fetch('https://test-79aed.firebaseio.com/test/.json')
