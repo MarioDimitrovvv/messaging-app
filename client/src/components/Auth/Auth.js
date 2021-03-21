@@ -8,19 +8,18 @@ const baseFormData = { firstName: '', secondName: '', email: '', password: '', r
 
 const Auth = (props) => {
     const [showPassword, setShowPassword] = useState(false);
-    const [isRegister, setIsRegister] = useState(true);
+    const [isRegister, setIsRegister] = useState(false);
     const [formData, setFormData] = useState(baseFormData);
 
     const onSubmitHandler = async (e) => {
         e.preventDefault();
         // Validate Inputs and send notification msg!!!
-        //Call history.push('/')
         try {
             if(isRegister) {
                 console.log('in Auth.js');
                 await register(formData);
             } else {
-                await login(formData);
+                await login(formData); 
             }
             props.history.push('/');
         } catch (error) {

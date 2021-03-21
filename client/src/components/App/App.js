@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 import { Route, Switch } from 'react-router-dom';
 
@@ -10,10 +10,6 @@ import './App.css'
 
 function App() {
     const [messages, setMessages] = useState([]);
-
-    // useEffect(() => {
-    //     demo();
-    // }, [messages]);
 
     const demo = () => {
         fetch('https://test-79aed.firebaseio.com/test/.json')
