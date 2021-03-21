@@ -12,6 +12,7 @@ router.post('/login', async (req, res) => {
 
         res.status(201).json(token);
     } catch (error) {
+        //send notification msg
         res.status(500).json({ message: 'User not found' })
         console.log('error is ' + error.message);
         console.log('in the catch blog');
@@ -27,11 +28,11 @@ router.post('/register', async (req, res) => {
         return res.status(200).json(token)
         
     } catch (err) {
+        //send notification msg
         console.log('Error is ' + err.message);
         res.status(500).json({ message: err })
         
     }
-    //send notification msg
 });
 
 module.exports = router;

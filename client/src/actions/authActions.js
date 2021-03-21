@@ -3,13 +3,13 @@ import Cookies from 'universal-cookie';
 import config from '../config';
 
 const cookies = new Cookies();
-const BASE_URL = 'http://localhost:4000/api/';
+const BASE_URL = config.BASE_URL;
 
 const login = async (formData) => {
     const { email, password } = formData
     
     try {
-        await fetch('http://localhost:4000/api/auth/login', {
+        await fetch(BASE_URL + 'auth/login', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
