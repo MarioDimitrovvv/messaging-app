@@ -1,15 +1,24 @@
-import { useState } from 'react';
-
-import { Route, Switch } from 'react-router-dom';
+import { useState, useEffect, useMemo } from 'react';
+import { Route, Switch, useLocation } from 'react-router-dom';
 
 import Header from '../Header';
 import Main from '../Main';
 import Auth from '../Auth';
 
 import './App.css'
+import UserContext from '../../context/UserContext';
 
 function App() {
+    const location = useLocation();
     const [messages, setMessages] = useState([]);
+    const [user, setUser] = useState(null)
+
+    const providerValue = useMemo(() => ({user, setUser}), [user, setUser]);
+    
+    useEffect(() => {
+        console.log('Location change');
+        console.log(location);
+    }, [location])
 
     const demo = () => {
         fetch('https://test-79aed.firebaseio.com/test/.json')
@@ -20,13 +29,15 @@ function App() {
 
     return (
         <div className="app">
-            <Header />
-            <Switch>
-                <Route exact path="/" render={() => <Main messages={messages} setMessages={setMessages} />} />
-                <Route exact path="/auth" component={Auth} />
-                <Route exact path="/about" render={() => <h1>About Us Page</h1>} />
-            </Switch>
-            <button onClick={demo}>Click Me</button>
+            <UserContext.Provider value={providerValue}>
+                <Header />
+                <Switch>
+                    <Route exact path="/" render={() => <Main messages={messages} setMessages={setMessages} />} />
+                    <Route exact path="/auth" component={Auth} />
+                    <Route exact path="/about" render={() => <h1>About Us Page</h1>} />
+                </Switch>
+                <button onClick={demo}>Click Me</button>
+            </UserContext.Provider>
 
         </div>
     );

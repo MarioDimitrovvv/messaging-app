@@ -1,6 +1,7 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useContext } from 'react';
 
-import {login, register} from '../../actions/authActions';
+import { login, register } from '../../actions/authActions';
+import UserContext from '../../context/UserContext';
 
 import './Auth.scss';
 
@@ -11,16 +12,22 @@ const Auth = (props) => {
     const [isRegister, setIsRegister] = useState(false);
     const [formData, setFormData] = useState(baseFormData);
 
+    const { user, setUser } = useContext(UserContext);
+
+
     const onSubmitHandler = async (e) => {
         e.preventDefault();
         // Validate Inputs and send notification msg!!!
         try {
-            if(isRegister) {
-                console.log('in Auth.js');
-                await register(formData);
+            let token = null;
+            if (isRegister) {
+                token = await register(formData);
             } else {
-                await login(formData); 
+                token = await login(formData);
             }
+
+            setUser(token);
+
             props.history.push('/');
         } catch (error) {
             //Send notification msg
@@ -29,9 +36,9 @@ const Auth = (props) => {
     }
 
     const handleChange = (e) => {
-        setFormData({...formData, [e.target.name]: e.target.value});
+        setFormData({ ...formData, [e.target.name]: e.target.value });
     }
-    
+
     const handlePassword = () => setShowPassword((prevShowPassword) => !prevShowPassword);
 
     const handleIsRegister = () => {
@@ -72,7 +79,7 @@ const Auth = (props) => {
                         </div>
                     </Fragment>
                 )}
-                <input type="submit" value="Submit"/>
+                <input type="submit" value="Submit" />
             </form>
             <div onClick={handleIsRegister} className="isRegister">
                 If you {isRegister ? 'already' : 'don\'t'} have an accout click here!

@@ -13,7 +13,7 @@ router.post('/login', async (req, res) => {
         res.status(201).json(token);
     } catch (error) {
         //send notification msg
-        res.status(500).json({ message: 'User not found' })
+        res.status(200).json({ message: error.message })
         console.log('error is ' + error.message);
         console.log('in the catch blog');
 
@@ -30,7 +30,7 @@ router.post('/register', async (req, res) => {
     } catch (err) {
         //send notification msg
         console.log('Error is ' + err.message);
-        res.status(500).json({ message: err })
+        res.status(200).json({ message: err })
         
     }
 });

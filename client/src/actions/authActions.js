@@ -1,6 +1,5 @@
-import Cookies from 'universal-cookie';
-
 import config from '../config';
+import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 const BASE_URL = config.BASE_URL;
@@ -9,7 +8,7 @@ const login = async (formData) => {
     const { email, password } = formData
     
     try {
-        await fetch(BASE_URL + 'auth/login', {
+        const result = await fetch(BASE_URL + 'auth/login', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -19,12 +18,13 @@ const login = async (formData) => {
                 password
             })
         })
-            .then(res => res.json())
-            .then(data => cookies.set(config.COOKIE, data))
-            //validate and call notification msg
-            .catch(err => console.log(err))
+        const token = await result.json();
+
+        cookies.set(config.COOKIE, token, { path: '/' });
         
-    } catch (error) {
+        return token;
+        } catch (error) {
+        // //validate and call notification msg
         console.log(error);
     }
 }
@@ -38,22 +38,29 @@ const register = async (formData) => {
         return;
     }
 
-    fetch(BASE_URL + 'auth/register', {
-        method: 'POST',
-        headers: {
-            'content-type': 'application/json',
-        },
-        body: JSON.stringify({
-            firstName,
-            secondName,
-            email,
-            password,repeatPassword
+    try {
+        
+        const result = await fetch(BASE_URL + 'auth/register', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify({
+                firstName,
+                secondName,
+                email,
+                password,repeatPassword
+            })
         })
-    })
-        .then(res => res.json())
-        .then(data => cookies.set(config.COOKIE, data))
+        
+        const token = await result.json();
+
+        cookies.set(config.COOKIE, token, { path: '/' });
+        return token;
+    } catch (error) {
         //validate and call notification msg
-        .catch(err => console.log(err))
+        console.log(error)
+    }
 }
 
 export {
