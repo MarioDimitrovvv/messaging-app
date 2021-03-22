@@ -11,7 +11,7 @@ const AuthForm = ({
     return (
         <Fragment>
             {isRegister ? <h1>Register/Sign Up</h1> : <h1>Login/Sign In</h1>}
-            <form onSubmit={onSubmitHandler} className="go-bottom">
+            <form onSubmit={(e) => onSubmitHandler(e)} className="go-bottom">
                 {isRegister && (
                     <Fragment>
                         <div>

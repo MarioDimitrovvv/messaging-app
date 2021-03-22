@@ -19,8 +19,9 @@ const login = async (formData) => {
             })
         })
         const token = await result.json();
-
-        cookies.set(config.COOKIE, token, { path: '/' });
+        if(!token.message) {
+            cookies.set(config.COOKIE, token, { path: '/' });
+        }
         
         return token;
         } catch (error) {
@@ -63,7 +64,12 @@ const register = async (formData) => {
     }
 }
 
+const logout = () => {
+    cookies.remove(config.COOKIE, { path: '/' });
+}
+
 export {
     login,
-    register
+    register,
+    logout
 }

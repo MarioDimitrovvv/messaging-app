@@ -17,7 +17,6 @@ function App() {
     
     useEffect(() => {
         console.log('Location change');
-        console.log(location);
     }, [location])
 
     const demo = () => {

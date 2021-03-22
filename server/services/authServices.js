@@ -19,7 +19,7 @@ async function register({ firstName, secondName, email, password, repeatPassword
         const user = new User({ firstName, secondName, name: `${firstName} ${secondName}`, email, password: hash });
 
         const newUser = await user.save();
-        console.log(newUser);
+        
     } catch (error) {
         console.log('Error from registration ' + error);   
     }
@@ -27,10 +27,10 @@ async function register({ firstName, secondName, email, password, repeatPassword
 
 async function login(email, password) {
     let user = await User.findOne({ email });
-    if (!user) throw { message: 'User not found!' };
-    console.log(user);
+    if (!user) return { message: 'User not found!' };
+
     let isMatch = await bcrypt.compare(password, user.password);
-    if(!isMatch) throw { message: 'Incorrect Password!' };
+    if(!isMatch) return { message: 'Incorrect Password!' };
 
     let token = jwt.sign({ _id: user._id, email }, config.SECRET);
 

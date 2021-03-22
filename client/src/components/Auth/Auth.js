@@ -15,7 +15,6 @@ const Auth = (props) => {
 
     const { setUser } = useContext(UserContext);
 
-
     const onSubmitHandler = async (e) => {
         e.preventDefault();
         // Validate Inputs and send notification msg!!!
@@ -26,10 +25,11 @@ const Auth = (props) => {
             } else {
                 token = await login(formData);
             }
-
-            setUser(token);
-
-            props.history.push('/');
+            
+            if(!token.message) {
+                setUser(token);
+                props.history.push('/');
+            }
         } catch (error) {
             //Send notification msg
             console.log(error);
