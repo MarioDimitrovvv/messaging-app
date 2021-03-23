@@ -1,7 +1,8 @@
 import { useState, useContext } from 'react';
 
-import { login, register } from '../../actions/authActions';
+import { getUser, login, register } from '../../actions/authActions';
 import UserContext from '../../context/UserContext';
+// import UserContext from '../../context/UserContext';
 
 import './Auth.scss';
 import AuthForm from './AuthForm/AuthForm';
@@ -25,9 +26,10 @@ const Auth = (props) => {
             } else {
                 token = await login(formData);
             }
-            
-            if(!token.message) {
-                setUser(token);
+
+            if (!token.message) {
+                const data = await getUser();
+                setUser(data.email);
                 props.history.push('/');
             }
         } catch (error) {

@@ -21,7 +21,7 @@ const login = async (formData) => {
         const token = await result.json();
         if (!token.message) {
             // localStorage.setItem(config.COOKIE, token);
-            cookies.set(config.COOKIE, token, { path: '/'});
+            cookies.set(config.COOKIE, token, { path: '/' });
         }
 
         return token;
@@ -66,12 +66,25 @@ const register = async (formData) => {
 }
 
 const logout = () => {
-    // cookies.remove(config.COOKIE, { path: '/' });
-    localStorage.removeItem(config.COOKIE);
+    cookies.remove(config.COOKIE, { path: '/' });
+}
+
+const getUser = async () => {
+    const response = await fetch(config.BASE_URL + 'user', {
+        method: 'POST',
+        mode: 'cors',
+        credentials: 'include',
+        headers: {
+            'content-type': 'application/json',
+        },
+    });
+
+    return await response.json();
 }
 
 export {
     login,
     register,
-    logout
+    logout,
+    getUser
 }

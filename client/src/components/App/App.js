@@ -7,17 +7,21 @@ import Auth from '../Auth';
 
 import './App.css'
 import UserContext from '../../context/UserContext';
+import { getUser } from '../../actions/authActions';
 
 function App() {
-    const location = useLocation();
+    // const location = useLocation();
     const [messages, setMessages] = useState([]);
     const [user, setUser] = useState(null)
 
     const providerValue = useMemo(() => ({user, setUser}), [user, setUser]);
     
     useEffect(() => {
-        console.log('Location change');
-    }, [location])
+        getUser()
+            .then(data => {
+                setUser(data.email);
+            });
+    }, []);
 
     const demo = () => {
         fetch('https://test-79aed.firebaseio.com/test/.json')
