@@ -15,7 +15,6 @@ router.post('/login', async (req, res) => {
         //send notification msg
         res.status(400).json({ message: error.message })
         console.log('error is ' + error.message);
-        console.log('in the catch blog');
 
     }
 });

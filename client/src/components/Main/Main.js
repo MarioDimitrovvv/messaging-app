@@ -1,4 +1,5 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import config from '../../config';
 import UserContext from '../../context/UserContext';
 
 import Message from '../Message';
@@ -6,7 +7,23 @@ import Message from '../Message';
 const Main = ({ messages, setMessages }) => {
 
     const [text, setText] = useState('');
-    const {user, setUser} = useContext(UserContext)
+
+    const { user } = useContext(UserContext);
+
+    useEffect(() => {
+
+        fetch(config.BASE_URL + 'user', {
+            method: 'POST',
+            mode: 'cors',
+            credentials: 'include',
+            headers: {
+                'content-type': 'application/json',
+            },
+        })
+            .then(res => res.json())
+            .then(data => console.log(data));
+    }, [])
+    
     const sendMessage = () => {
         fetch('https://test-79aed.firebaseio.com/test.json', {
             method: 'POST',

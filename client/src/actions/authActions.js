@@ -6,7 +6,7 @@ const BASE_URL = config.BASE_URL;
 
 const login = async (formData) => {
     const { email, password } = formData
-    
+
     try {
         const result = await fetch(BASE_URL + 'auth/login', {
             method: 'POST',
@@ -19,12 +19,13 @@ const login = async (formData) => {
             })
         })
         const token = await result.json();
-        if(!token.message) {
-            cookies.set(config.COOKIE, token, { path: '/' });
+        if (!token.message) {
+            // localStorage.setItem(config.COOKIE, token);
+            cookies.set(config.COOKIE, token, { path: '/'});
         }
-        
+
         return token;
-        } catch (error) {
+    } catch (error) {
         // //validate and call notification msg
         console.log(error);
     }
@@ -32,7 +33,7 @@ const login = async (formData) => {
 
 const register = async (formData) => {
     const { firstName, secondName, email, password, repeatPassword } = formData;
-    
+
     if (password !== repeatPassword) {
         console.log('Password Missmatch!');
         //validate and call notification msg
@@ -40,7 +41,7 @@ const register = async (formData) => {
     }
 
     try {
-        
+
         const result = await fetch(BASE_URL + 'auth/register', {
             method: 'POST',
             headers: {
@@ -50,13 +51,13 @@ const register = async (formData) => {
                 firstName,
                 secondName,
                 email,
-                password,repeatPassword
+                password, repeatPassword
             })
         })
-        
-        const token = await result.json();
 
-        cookies.set(config.COOKIE, token, { path: '/' });
+        const token = await result.json();
+        localStorage.setItem(config.COOKIE, token);
+        cookies.set(config.COOKIE, token, { path: '/', domain: 'localhost:4000' });
         return token;
     } catch (error) {
         //validate and call notification msg
@@ -65,7 +66,8 @@ const register = async (formData) => {
 }
 
 const logout = () => {
-    cookies.remove(config.COOKIE, { path: '/' });
+    // cookies.remove(config.COOKIE, { path: '/' });
+    localStorage.removeItem(config.COOKIE);
 }
 
 export {
