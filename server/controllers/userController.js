@@ -10,7 +10,7 @@ router.post('/user', auth, (req, res) => {
 })
 
 router.post('/all', auth, async (req, res) => {
-    const currentUser = res.locals.user;
+    const currentUser = res.locals.user?._id;
     try {
         const allUsers = await getAllUsers(currentUser);
         res.status(200).json(allUsers);

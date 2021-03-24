@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { logout } from '../../actions/authActions';
+import IdContext from '../../context/IdContext';
 import UserContext from '../../context/UserContext';
 
 import './Header.scss';
@@ -8,12 +9,14 @@ import './Header.scss';
 function Header() {
 
     const { user, setUser } = useContext(UserContext);
+    const { setId } = useContext(IdContext);
 
     const handleLogout = () => {
         logout();
         setUser(null);
+        setId(null);
     }
-    
+
     return (
         <div className="header">
             <NavLink to="/" activeClassName="used-link" exact className="header-child">Home</NavLink>

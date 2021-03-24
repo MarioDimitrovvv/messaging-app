@@ -31,8 +31,8 @@ async function login(email, password) {
 
     let isMatch = await bcrypt.compare(password, user.password);
     if(!isMatch) return { message: 'Incorrect Password!' };
-
-    let token = jwt.sign({ _id: user._id, email }, config.SECRET);
+    
+    let token = jwt.sign({ _id: user._id, email, name: user.name }, config.SECRET);
 
     return token;
 }

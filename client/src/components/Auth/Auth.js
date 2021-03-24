@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 
 import { login, register } from '../../actions/authActions';
 import { getUser } from '../../actions/userActions';
+import IdContext from '../../context/IdContext';
 import UserContext from '../../context/UserContext';
 // import UserContext from '../../context/UserContext';
 
@@ -16,6 +17,7 @@ const Auth = (props) => {
     const [formData, setFormData] = useState(baseFormData);
 
     const { setUser } = useContext(UserContext);
+    const { setId } = useContext(IdContext);
 
     const onSubmitHandler = async (e) => {
         e.preventDefault();
@@ -30,8 +32,11 @@ const Auth = (props) => {
 
             if (!token.message) {
                 const data = await getUser();
-                setUser(data.email);
+                setUser(data.name);
+                setId(data._id);
                 props.history.push('/');
+            } else {
+                console.log(token.message);
             }
         } catch (error) {
             //Send notification msg

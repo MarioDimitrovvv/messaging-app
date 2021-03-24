@@ -28,7 +28,12 @@ const getAllUsers = async () => {
     return await response.json();
 }
 
+const addFriend = (userId, addedFriend) => {
+
+}
+
 export {
     getUser,
     getAllUsers,
+    addFriend
 }
