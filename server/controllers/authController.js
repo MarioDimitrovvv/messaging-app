@@ -1,6 +1,5 @@
-const { Router, response } = require('express');
+const { Router } = require('express');
 const { register, login } = require('../services/authServices');
-const { COOKIE } = require('../config');
 
 const router = Router();
 

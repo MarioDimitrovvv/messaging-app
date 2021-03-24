@@ -1,7 +1,10 @@
-const Message = (props) => {
+const Message = ({
+    message,
+    user,
+}) => {
     return (
         <div>
-            {props.message}
+            {user}: {message}
         </div>
     )
 }

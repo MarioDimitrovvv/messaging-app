@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 
-import { getUser, login, register } from '../../actions/authActions';
+import { login, register } from '../../actions/authActions';
+import { getUser } from '../../actions/userActions';
 import UserContext from '../../context/UserContext';
 // import UserContext from '../../context/UserContext';
 

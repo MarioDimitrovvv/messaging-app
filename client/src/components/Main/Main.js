@@ -3,25 +3,23 @@ import UserContext from '../../context/UserContext';
 
 import Message from '../Message';
 
-const Main = ({ messages, setMessages }) => {
+const Main = ({ messages, setMessages, demo }) => {
 
-    const [text, setText] = useState('');
+    const [text, setText] = useState([]);
 
     const { user } = useContext(UserContext);
 
-    
+
     const sendMessage = () => {
         fetch('https://test-79aed.firebaseio.com/test.json', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
             },
-            body: JSON.stringify({ text })
+            body: JSON.stringify({ text, user })
         })
             .then(res => res.json())
-            .then(data => console.log(data));
 
-        setMessages([...Object.values(messages), text]);
         setText('');
     }
 
@@ -30,9 +28,11 @@ const Main = ({ messages, setMessages }) => {
             {user && <div>Welcome, {user}</div>}
             <input value={text} onChange={e => setText(e.target.value)} />
             <button type="submit" onClick={sendMessage}>Send!</button>
-            {messages && Object.values(messages).map(x => (
-                <Message message={x.text} />
-            ))}
+            {messages && Object.keys(messages).map(x => {
+                return (
+                    <Message message={messages[x].text} user={messages[x].user} key={x} />
+                )
+            })}
         </div>
     )
 }
