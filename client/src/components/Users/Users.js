@@ -1,18 +1,21 @@
 import { useState, useEffect } from 'react'
-import config from '../../config'
+import { getAllUsers } from '../../actions/userActions';
+import User from './User';
 
 const Users = () => {
-
+    const [users, setUsers] = useState([]);
+    
     useEffect(() => {
-        fetch(config.BASE_URL + 'users')
-            .then(res => res.json())
-            .then(data => console.log(data));
+        getAllUsers()
+            .then(data =>setUsers(data));
     }, [])
 
+    console.log(users);
+    
     return (
-        <div>
-            Users
-        </div>
+        users 
+            ? users?.map(x => <User key={x._id} name={x.name} email={x.email}/>)
+            : <div>There is no users...</div>
     )
 }
 

@@ -28,7 +28,6 @@ function App() {
 
     useEffect(() => {
         demo();
-        console.log('message changed');
     }, []);
 
     const demo = () => {
@@ -39,7 +38,6 @@ function App() {
             })
             .catch(err => console.log(err));
     }
-    console.log(messages);
     
     return (
         <div className="app">

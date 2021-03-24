@@ -16,7 +16,14 @@ const getUser = async () => {
 }
 
 const getAllUsers = async () => {
-    const response = await fetch(BASE_URL + 'users');
+    const response = await fetch(BASE_URL + 'users/all', {
+        method: 'POST',
+        mode: 'cors',
+        credentials: 'include',
+        headers: {
+            'content-type': 'application/json',
+        },
+    });
 
     return await response.json();
 }

@@ -5,18 +5,21 @@ const auth = require('../middlewares/auth');
 
 const router = Router();
 
-router.get('/', async (req, res) => {
-    try {
-        const allUsers = await getAllUsers();
-        res.status(200).json({users: allUsers});
-    } catch (error) {
-        res.status(404).json({message: 'Something went wrong!'});
-    }
-     
+router.post('/user', auth, (req, res) => {
+    res.status(200).json({ ...res.locals.user });
 })
 
-router.post('/user', auth, (req, res) => {
-    res.status(200).json({...res.locals.user});
+router.post('/all', auth, async (req, res) => {
+    const currentUser = res.locals.user;
+    try {
+        const allUsers = await getAllUsers(currentUser);
+        res.status(200).json(allUsers);
+    } catch (error) {
+        console.log(error.message);
+        res.status(404).json({ message: 'Something went wrong!' });
+    }
+
 })
+
 
 module.exports = router;
