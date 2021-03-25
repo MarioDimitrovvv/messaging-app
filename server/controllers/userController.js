@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getAllUsers } = require('../services/userServices');
+const { getAllUsers, addUser } = require('../services/userServices');
 
 const auth = require('../middlewares/auth');
 
@@ -18,7 +18,16 @@ router.post('/all', auth, async (req, res) => {
         console.log(error.message);
         res.status(404).json({ message: 'Something went wrong!' });
     }
+})
 
+router.post('/add', async (req, res) => {
+    try {
+        await addUser(req.body);
+        res.status(200);
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({message: 'Cannot add the user...'});
+    }
 })
 
 

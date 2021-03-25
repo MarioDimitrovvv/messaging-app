@@ -11,12 +11,11 @@ const Users = () => {
     useEffect(() => {
         getAllUsers()
             .then(data => setUsers(data));
-        console.log('at users component');
     }, [user])
 
     return (
         users
-            ? users?.map(x => <User key={x._id} name={x.name} email={x.email} />)
+            ? users?.map(x => <User key={x._id} name={x.name} email={x.email} userId={x._id} />)
             : <div>There is no users...</div>
     )
 }

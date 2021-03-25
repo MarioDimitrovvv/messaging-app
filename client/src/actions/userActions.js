@@ -28,8 +28,17 @@ const getAllUsers = async () => {
     return await response.json();
 }
 
-const addFriend = (userId, addedFriend) => {
-
+const addFriend = async (id, userId) => {
+    const response = await fetch(BASE_URL + 'users/add', {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+            currentUser: id,
+            addingUser: userId,
+        })
+    });
 }
 
 export {

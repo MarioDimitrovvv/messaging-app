@@ -7,6 +7,19 @@ const getAllUsers = async (currentUser) => {
     return users;
 }
 
+const addUser = async ({currentUser, addingUser}) => {
+    await User.findByIdAndUpdate(
+        currentUser,
+        {$push: { friends: addingUser}}
+    )
+
+    await User.findByIdAndUpdate(
+        addingUser,
+        {$push: { friends: currentUser}}
+    )
+}
+
 module.exports = {
     getAllUsers,
+    addUser
 }

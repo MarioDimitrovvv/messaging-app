@@ -6,7 +6,8 @@ import './User.scss';
 
 const User = ({
     name,
-    email
+    email,
+    userId,
 }) => {
 
     const [isFriend, setIsFriend] = useState(false);
@@ -16,10 +17,11 @@ const User = ({
 
     const handleFriendButton = () => {
         if (!isFriend) {
-            console.log(user);
             console.log(id);
-            // addFriend(user.id, )
+            console.log(userId);
+            addFriend(id, userId);
         }
+
         setIsFriend((prevIsFriend) => !prevIsFriend);
     }
 
@@ -27,7 +29,7 @@ const User = ({
         <div className="user-container">
             <div>Name: {name}</div>
             <div>Email: {email}</div>
-            {user && <button onClick={() => handleFriendButton()}>{isFriend ? 'Unfriend' : 'Add friend'}</button>}
+            {user && <button onClick={() => handleFriendButton()} disabled={isFriend} >{isFriend ? 'Friend' : 'Add friend'}</button>}
         </div>
     )
 }

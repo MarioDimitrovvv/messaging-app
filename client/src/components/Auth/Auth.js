@@ -34,7 +34,7 @@ const Auth = (props) => {
                 const data = await getUser();
                 setUser(data.name);
                 setId(data._id);
-                props.history.push('/');
+                props.history.push('/users');
             } else {
                 console.log(token.message);
             }
