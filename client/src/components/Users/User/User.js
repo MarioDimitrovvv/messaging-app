@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { addFriend } from '../../../actions/userActions';
 import IdContext from '../../../context/IdContext';
 import UserContext from '../../../context/UserContext';
@@ -7,6 +7,7 @@ import './User.scss';
 const User = ({
     name,
     email,
+    friends,
     userId,
 }) => {
 
@@ -14,6 +15,11 @@ const User = ({
 
     const { user } = useContext(UserContext);
     const { id } = useContext(IdContext);
+
+    // console.log(friends.some(x => console.log(x.name)));
+    useEffect(() => {
+        friends.some(x => x.name === name) ? setIsFriend(true) : setIsFriend(false);
+    }, [friends, user, name]);
 
     const handleFriendButton = () => {
         if (!isFriend) {

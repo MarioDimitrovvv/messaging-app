@@ -5,15 +5,17 @@ import User from './User';
 
 const Users = () => {
     const [users, setUsers] = useState([]);
+    const [friends, setFriends] = useState([]);
 
     const { user } = useContext(UserContext);
 
     useEffect(() => {
-        const getUsers = (async () => {
+        (async () => {
             try {
                 const users = await getAllUsers()
-                const firends = await getFriends();
-                setUsers(users)
+                const friends = await getFriends();
+                setUsers(users);
+                setFriends(friends.friends);
             } catch (error) {
                 console.log(error);                
             }
@@ -22,7 +24,7 @@ const Users = () => {
 
     return (
         users
-            ? users?.map(x => <User key={x._id} name={x.name} email={x.email} userId={x._id} />)
+            ? users?.map(x => <User key={x._id} name={x.name} email={x.email} friends={friends} userId={x._id} />)
             : <div>There is no users...</div>
     )
 }
