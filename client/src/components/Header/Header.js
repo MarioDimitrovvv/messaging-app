@@ -21,6 +21,7 @@ function Header() {
         <div className="header">
             <NavLink to="/" activeClassName="used-link" exact className="header-child">Home</NavLink>
             <NavLink to="/contacts" activeClassName="used-link" className="header-child">Contact</NavLink>
+            <NavLink to="/friends" activeClassName="used-link" className="header-child">Friends</NavLink>
             <NavLink to="/users" activeClassName="used-link" className="header-child">Users</NavLink>
             <NavLink to="/about" activeClassName="used-link" className="header-child">About</NavLink>
             {user 

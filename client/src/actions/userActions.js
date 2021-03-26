@@ -29,7 +29,7 @@ const getAllUsers = async () => {
 }
 
 const addFriend = async (id, userId) => {
-    const response = await fetch(BASE_URL + 'users/add', {
+    await fetch(BASE_URL + 'users/add', {
         method: 'POST',
         headers: {
             'content-type': 'application/json',
@@ -41,8 +41,21 @@ const addFriend = async (id, userId) => {
     });
 }
 
+const getFriends = async () => {
+    const response = await fetch(BASE_URL + 'users/friends', {
+        mode: 'cors',
+        credentials: 'include',
+        headers: {
+            'content-type': 'application/json',
+        },
+    });
+
+    return await response.json();
+}
+
 export {
     getUser,
     getAllUsers,
-    addFriend
+    addFriend,
+    getFriends
 }

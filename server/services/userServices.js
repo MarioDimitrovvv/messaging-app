@@ -19,7 +19,10 @@ const addUser = async ({currentUser, addingUser}) => {
     )
 }
 
+const getFriends = async (id) => await User.findById(id, {friends: 1, _id: 0}).populate('friends', 'name');
+
 module.exports = {
     getAllUsers,
-    addUser
+    addUser,
+    getFriends
 }
