@@ -51,7 +51,7 @@ function App() {
                     <Switch>
                         <Route exact path="/" render={() => <Main messages={messages} setMessages={setMessages} demo={demo} />} />
                         <Route exact path="/auth" component={Auth} />
-                        <Route exact path="/friends" component={Friends} />
+                        <Route exact path="/messages/:id" component={Friends} />
                         <Route exact path="/users" component={Users} />
                         <Route exact path="/about" render={() => <h1>About Us Page</h1>} />
                     </Switch>

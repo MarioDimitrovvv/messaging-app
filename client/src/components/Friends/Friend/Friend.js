@@ -8,7 +8,6 @@ const Friend = ({
     lastClicked
 }) => {
     // const [isFriend, setIsFriend] = useState(false);
-
     // const { user } = useContext(UserContext);
     // const { id } = useContext(IdContext);
 
