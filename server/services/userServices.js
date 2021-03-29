@@ -26,8 +26,9 @@ const addUser = async ({ currentUser, addingUser }) => {
 const getFriends = async (id) => await User.findById(id, { friends: 1, _id: 0 }).populate('friends', 'name');
 
 const getConversation = async ({ userId, friendId }) => {
+    console.log(userId, friendId);
     try {
-        const conversation = await Conversation.findOne({ users: [userId, friendId] });
+        const conversation = await Conversation.findOne({ users: { $all: [userId, friendId] } });
         return conversation;
     } catch (error) {
         console.log(error);

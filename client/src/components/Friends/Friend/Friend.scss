@@ -4,6 +4,7 @@
     font-size: large;
     border: 1px solid black;
     width: 530px;
+    margin-right: initial;
 }
 
 .last-clicked {
@@ -12,13 +13,13 @@
 
 .chat-container {
     background-color: lightgray;
-    margin-top: -194px;
+    margin-top: -310px;
     margin-left: 530px;
     width: 990px;
     height: 550px;
     .text-container {
         resize: none;
-        margin-top: 450px;
+        margin-top: 250px;
         width: 900px;
         height: 100px;
         margin-right: 400px;

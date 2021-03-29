@@ -1,7 +1,10 @@
 import { useState, useEffect, useContext } from 'react'
 
-import Friend from './Friend';
 import config from '../../config';
+
+import Friend from './Friend';
+import Message from './Message';
+
 import IdContext from '../../context/IdContext';
 import UserContext from '../../context/UserContext';
 
@@ -12,7 +15,7 @@ const Friends = ({ history, location }) => {
     const [message, setMessage] = useState(null);
     const [messages, setMessages] = useState([]);
     const [isNewConversation, setIsNewConversation] = useState(false);
-    
+
     const [lastClicked, setLastClicked] = useState(null);
 
     const { user } = useContext(UserContext);
@@ -21,7 +24,7 @@ const Friends = ({ history, location }) => {
     const pathname = location.pathname;
 
     //виж по история есето и изпитване по математика утре
-    
+
     useEffect(() => {
         (async () => {
             if (user) {
@@ -66,13 +69,15 @@ const Friends = ({ history, location }) => {
         fetch(`${config.BASE_URL}user/${userId}/friend/${friendId}`)
             .then(res => res.json())
             .then(data => {
-                if(data) {
+                console.log(data);
+                if (data) {
                     setIsNewConversation(false);
+                    setMessages(data);
                 } else {
                     setIsNewConversation(true);
-
                 }
-            });
+            })
+            .catch(err => console.log(err));
     }
 
     const handleChange = (e) => {
@@ -91,6 +96,7 @@ const Friends = ({ history, location }) => {
                 message: message,
             })
         })
+        // .then(() => setMessages(...messages, messages))
 
     }
 
@@ -103,6 +109,7 @@ const Friends = ({ history, location }) => {
                     <div className="chat-container">
                         {isNewConversation ? <div>Start new conversation</div> : null}
                         {/* Render every message with messages.map(x => <Message />) for current conversation */}
+                        {messages.map(x => <Message key={x._id} sender={x.sender} message={x.message} id={id} />)}
                         <form onSubmit={(e) => handleSubmit(e)}>
                             <textarea className="text-container" onChange={handleChange} placeholder="Aa"></textarea>
                             <input type="submit" value="Send" />
