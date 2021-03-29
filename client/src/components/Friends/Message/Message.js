@@ -1,19 +1,13 @@
 import './Message.scss';
 
-let classNames = 'message'
+let classNames = 'message';
 const Message = ({
     sender,
     message,
     id
 }) => {
 
-
-    
-    if(sender === id) {
-        classNames += ' sending'
-    } else {
-        classNames = 'message'
-    }
+    sender === id ? classNames += ' sending' : classNames = 'message';
     
     return (
         <div className={classNames} >

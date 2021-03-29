@@ -26,7 +26,6 @@ const addUser = async ({ currentUser, addingUser }) => {
 const getFriends = async (id) => await User.findById(id, { friends: 1, _id: 0 }).populate('friends', 'name');
 
 const getConversation = async ({ userId, friendId }) => {
-    console.log(userId, friendId);
     try {
         const conversation = await Conversation.findOne({ users: { $all: [userId, friendId] } });
         return conversation;
@@ -39,7 +38,7 @@ const getConversation = async ({ userId, friendId }) => {
 const sendMessage = async ({ userId, friendId, message }) => {
     console.log(userId, friendId, message);
     try {
-        const conversation = await Conversation.findOneAndUpdate({ users: [userId, friendId] });
+        const conversation = await Conversation.findOne({ users: { $all: [userId, friendId] } });
         if (conversation) {
             conversation.messages.push({ sender: userId, message });
             conversation.save();

@@ -26,7 +26,8 @@ router.get('/:userId/friend/:friendId', async (req, res) => {
 
 router.post('/:userId/friend/:friendId', async (req, res) => {
     const sendedMessage = await sendMessage({...req.params, ...req.body});
-    res.sendStatus(201);
+    
+    // res.sendStatus(201);
 })
 
 router.post('/add', async (req, res) => {
