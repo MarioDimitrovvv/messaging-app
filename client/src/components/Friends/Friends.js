@@ -1,8 +1,11 @@
 import { useState, useEffect, useContext } from 'react'
 
-import { getFriends } from '../../actions/userActions';
-import UserContext from '../../context/UserContext';
 import Friend from './Friend';
+import config from '../../config';
+import IdContext from '../../context/IdContext';
+import UserContext from '../../context/UserContext';
+
+import { getFriends } from '../../actions/userActions';
 
 const Friends = ({ history, location }) => {
     const [friends, setFriends] = useState([]);
@@ -12,31 +15,34 @@ const Friends = ({ history, location }) => {
     const [lastClicked, setLastClicked] = useState(null);
 
     const { user } = useContext(UserContext);
+    const { id } = useContext(IdContext);
+
     const pathname = location.pathname;
 
-    // Create conversation if there is no conversation in the db with exact same users
-
+    //виж по история есето и изпитване по математика утре
+    
     useEffect(() => {
-        (async() => {
-            if(user) {
+        (async () => {
+            if (user) {
+                //move the logic
                 try {
                     const data = await getFriends();
                     const allFriends = data.friends;
                     const firstFriend = allFriends[0]._id;
 
-                    if(allFriends.length > 0) {
+                    if (allFriends.length > 0) {
                         setFriends(allFriends);
                         setLastClicked(firstFriend);
                         history.push(`/messages/${firstFriend}`);
                     } else {
                         setFriends(null);
                     }
-                    
+
                 } catch (error) {
                     console.log(error);
                 }
             } else {
-                //make better it is not working
+                //is not working yet
                 // history.push('/auth');
             }
         })()
@@ -45,14 +51,18 @@ const Friends = ({ history, location }) => {
 
     useEffect(() => {
         // Fetch at first for all conversations and on clicking on friend render current messages
-        // Find conversation by user ids
-        
-        history.push(`/messages/${lastClicked}`);
+        // Find conversation by user ids and then move the logic in different file
+
+        if (id && lastClicked) {
+            history.push(`/messages/${lastClicked}`);
+            getMessages(id, lastClicked)
+        }
 
     }, [lastClicked, pathname])
 
     const getMessages = (userId, friendId) => {
-
+        // to deal with clicking already fetched friend
+        fetch(`${config.BASE_URL}user/${userId}/friend/${friendId}`);
     }
 
     //move to another file

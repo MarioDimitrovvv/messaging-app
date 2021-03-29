@@ -3,7 +3,7 @@ import config from '../config';
 const BASE_URL = config.BASE_URL;
 
 const getUser = async () => {
-    const response = await fetch(BASE_URL + 'users/user', {
+    const response = await fetch(BASE_URL + 'user', {
         method: 'POST',
         mode: 'cors',
         credentials: 'include',
@@ -29,7 +29,7 @@ const getAllUsers = async () => {
 }
 
 const addFriend = async (id, userId) => {
-    await fetch(BASE_URL + 'users/add', {
+    await fetch(BASE_URL + 'user/add', {
         method: 'POST',
         headers: {
             'content-type': 'application/json',
@@ -42,7 +42,7 @@ const addFriend = async (id, userId) => {
 }
 
 const getFriends = async () => {
-    const response = await fetch(BASE_URL + 'users/friends', {
+    const response = await fetch(BASE_URL + 'user/friends', {
         mode: 'cors',
         credentials: 'include',
         headers: {

@@ -5,9 +5,8 @@ const auth = require('../middlewares/auth');
 
 const router = Router();
 
-router.post('/user', auth, async (req, res) => {
+router.post('/', auth, async (req, res) => {
     try {
-        // const friends = await getFriends(res.locals.user?._id);
         res.status(200).json({ ...res.locals.user });
     } catch (error) {
         console.log(error.message);
@@ -15,15 +14,8 @@ router.post('/user', auth, async (req, res) => {
     }
 })
 
-router.post('/all', auth, async (req, res) => {
-    const currentUser = res.locals.user?._id;
-    try {
-        const allUsers = await getAllUsers(currentUser);
-        res.status(200).json(allUsers);
-    } catch (error) {
-        console.log(error.message);
-        res.status(404).json({ message: 'Something went wrong!' });
-    }
+router.get('/:userId/friend/:friendId', (req, res) => {
+    console.log(req.params);
 })
 
 router.post('/add', async (req, res) => {
