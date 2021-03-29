@@ -17,7 +17,6 @@ router.post('/', auth, async (req, res) => {
 router.get('/:userId/friend/:friendId', async (req, res) => {
     try {
         const conversation = await getConversation(req.params);
-        console.log(conversation);
         conversation ? res.status(200).json(conversation.messages) : res.status(204).json({message: 'No conversation'});
     } catch (error) {
         console.log(error);        
@@ -25,9 +24,9 @@ router.get('/:userId/friend/:friendId', async (req, res) => {
 })
 
 router.post('/:userId/friend/:friendId', async (req, res) => {
-    const sendedMessage = await sendMessage({...req.params, ...req.body});
+    await sendMessage({...req.params, ...req.body});
     
-    // res.sendStatus(201);
+    res.status(201);
 })
 
 router.post('/add', async (req, res) => {

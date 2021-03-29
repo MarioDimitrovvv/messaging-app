@@ -12,7 +12,7 @@ import { getFriends } from '../../actions/userActions';
 
 const Friends = ({ history, location }) => {
     const [friends, setFriends] = useState([]);
-    const [message, setMessage] = useState('Aa');
+    const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
     const [isNewConversation, setIsNewConversation] = useState(false);
 
@@ -56,7 +56,6 @@ const Friends = ({ history, location }) => {
     useEffect(() => {
         // Fetch at first for all conversations and on clicking on friend render current messages
         // Find conversation by user ids and then move the logic in different file
-        console.log(lastClicked);
         if (id && lastClicked) {
             history.push(`/messages/${lastClicked}`);
             getMessages(id, lastClicked)
@@ -81,12 +80,19 @@ const Friends = ({ history, location }) => {
     }
 
     const handleChange = (e) => {
-        setMessage(e.target.value);
+        console.log(message);
+        if(e.target){
+            setMessage(e.target.value);
+        } else {
+            setMessage('');
+        }
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
+        
+        handleChange('')
+        // setMessage('')
         fetch(`${config.BASE_URL}user/${id}/friend/${lastClicked}`, {
             method: 'POST',
             headers: {
@@ -97,9 +103,11 @@ const Friends = ({ history, location }) => {
             })
         })
             .then((res) => res.json())
-            .then(data => console.log(data))
-            .catch(err=> console.log(err))
-            
+            .then(data => {
+                console.log(data)
+            })
+            .catch(err => console.log(err))
+
     }
 
     return (
@@ -112,7 +120,7 @@ const Friends = ({ history, location }) => {
                         {isNewConversation ? <div>Start new conversation</div> : null}
                         {messages.map(x => <Message key={x._id} sender={x.sender} message={x.message} id={id} />)}
                         <form onSubmit={(e) => handleSubmit(e)}>
-                            <textarea className="text-container" onChange={handleChange} placeholder={message}></textarea>
+                            <textarea className="text-container" onChange={handleChange} value={message} placeholder="Aa"></textarea>
                             <input type="submit" value="Send" />
                         </form>
                     </div>
