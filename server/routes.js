@@ -6,8 +6,6 @@ const authController = require('./controllers/authController');
 
 const router = Router();
 
-//think how to make routes better
-
 router.use('/api/user', userController);
 router.use('/api/users', allUsersController);
 router.use('/api/auth', authController);

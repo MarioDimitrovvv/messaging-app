@@ -9,9 +9,10 @@ import { getFriends } from '../../actions/userActions';
 
 const Friends = ({ history, location }) => {
     const [friends, setFriends] = useState([]);
-    const [message, setMessage] = useState('');
+    const [message, setMessage] = useState(null);
     const [messages, setMessages] = useState([]);
-
+    const [isNewConversation, setIsNewConversation] = useState(false);
+    
     const [lastClicked, setLastClicked] = useState(null);
 
     const { user } = useContext(UserContext);
@@ -62,43 +63,35 @@ const Friends = ({ history, location }) => {
 
     const getMessages = (userId, friendId) => {
         // to deal with clicking already fetched friend
-        fetch(`${config.BASE_URL}user/${userId}/friend/${friendId}`);
+        fetch(`${config.BASE_URL}user/${userId}/friend/${friendId}`)
+            .then(res => res.json())
+            .then(data => {
+                if(data) {
+                    setIsNewConversation(false);
+                } else {
+                    setIsNewConversation(true);
+
+                }
+            });
     }
-
-    //move to another file
-    // fetch('....', {
-    //     method: 'POST',
-    //     headers: {
-    //         'content-type': 'application/json',
-    //     },
-    //     body: JSON.stringify({
-    //         users: [user, lastClicked],
-    //     })
-    // })
-
-
 
     const handleChange = (e) => {
         setMessage(e.target.value);
-        console.log(message);
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        fetch('....', {
+        fetch(`${config.BASE_URL}user/${id}/friend/${lastClicked}`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
             },
             body: JSON.stringify({
-                users: [user, lastClicked],
-                sendingMessage: message,
-                sender: user,
+                message: message,
             })
         })
 
-        console.log('user id ' + lastClicked);
     }
 
     return (
@@ -108,6 +101,7 @@ const Friends = ({ history, location }) => {
                 <div>
                     {friends?.map(x => <Friend key={x._id} name={x.name} userId={x._id} onClick={setLastClicked} lastClicked={lastClicked} />)}
                     <div className="chat-container">
+                        {isNewConversation ? <div>Start new conversation</div> : null}
                         {/* Render every message with messages.map(x => <Message />) for current conversation */}
                         <form onSubmit={(e) => handleSubmit(e)}>
                             <textarea className="text-container" onChange={handleChange} placeholder="Aa"></textarea>

@@ -1,8 +1,8 @@
 const { Router } = require('express');
-const { getAllUsers, addUser, getFriends } = require('../services/userServices');
+const { getAllUsers, addUser, getFriends, getConversation, sendMessage } = require('../services/userServices');
 
 const auth = require('../middlewares/auth');
-
+ 
 const router = Router();
 
 router.post('/', auth, async (req, res) => {
@@ -14,8 +14,13 @@ router.post('/', auth, async (req, res) => {
     }
 })
 
-router.get('/:userId/friend/:friendId', (req, res) => {
-    console.log(req.params);
+router.get('/:userId/friend/:friendId', async (req, res) => {
+    const conversation = await getConversation(req.params);
+    res.status(200).json(conversation);
+})
+
+router.post('/:userId/friend/:friendId', async (req, res) => {
+    const sendedMessage = await sendMessage({...req.params, ...req.body});
 })
 
 router.post('/add', async (req, res) => {
