@@ -41,13 +41,13 @@ const sendMessage = async ({ userId, friendId, message }) => {
         const conversation = await Conversation.findOne({ users: { $all: [userId, friendId] } });
         if (conversation) {
             conversation.messages.push({ sender: userId, message });
-            conversation.save();
+            return conversation.save();
         } else {
             const newConversation = new Conversation({
                 users: [userId, friendId],
                 messages: [{ sender: userId, message }]
             });
-            newConversation.save();
+            return newConversation.save();
         }
     } catch (error) {
         console.log(error);

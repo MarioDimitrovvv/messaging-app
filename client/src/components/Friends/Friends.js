@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext, useCallback } from 'react';
 
 import config from '../../config';
 
@@ -9,6 +9,7 @@ import IdContext from '../../context/IdContext';
 import UserContext from '../../context/UserContext';
 
 import { getFriends } from '../../actions/userActions';
+import { useSocket } from '../../context/Socket';
 
 const Friends = ({ history, location }) => {
     const [friends, setFriends] = useState([]);
@@ -21,9 +22,27 @@ const Friends = ({ history, location }) => {
     const { user } = useContext(UserContext);
     const { id } = useContext(IdContext);
 
+    const socket = useSocket();
+
     const pathname = location.pathname;
 
-    //виж по история есето и изпитване по математика утре
+    const sendMessages = useCallback((lastClicked, message) => {
+
+        fetch(`${config.BASE_URL}user/${id}/friend/${lastClicked}`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify({
+                message: message,
+            })
+        })
+            .then((res) => res.json())
+            .then(data => {
+                console.log(data)
+            })
+            .catch(err => console.log(err))
+    }, [setIsNewConversation])
 
     useEffect(() => {
         (async () => {
@@ -61,14 +80,28 @@ const Friends = ({ history, location }) => {
             getMessages(id, lastClicked)
         }
 
+
     }, [lastClicked, pathname])
+
+    const receiveMsg = (messages) => {
+        setMessages(messages)
+    }
+    useEffect(() => {
+        if (socket === undefined) return;
+        socket.on('receive-message', receiveMsg);
+
+        // return () => {
+        //     console.log('Disconnect socket');
+        //     return socket.off('receive-message')
+        // };
+    }, [socket, lastClicked])
+
 
     const getMessages = (userId, friendId) => {
         // to deal with clicking already fetched friend
         fetch(`${config.BASE_URL}user/${userId}/friend/${friendId}`)
             .then(res => res.status === 200 ? res.json() : setMessages([]))
             .then(data => {
-                console.log(data);
                 if (data) {
                     setIsNewConversation(false);
                     setMessages(data);
@@ -80,34 +113,14 @@ const Friends = ({ history, location }) => {
     }
 
     const handleChange = (e) => {
-        console.log(message);
-        if(e.target){
-            setMessage(e.target.value);
-        } else {
-            setMessage('');
-        }
+        setMessage(e.target.value);
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
-        handleChange('')
-        // setMessage('')
-        fetch(`${config.BASE_URL}user/${id}/friend/${lastClicked}`, {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-            },
-            body: JSON.stringify({
-                message: message,
-            })
-        })
-            .then((res) => res.json())
-            .then(data => {
-                console.log(data)
-            })
-            .catch(err => console.log(err))
+        socket.emit('send-message', { lastClicked, message })
 
+        setMessage('');
     }
 
     return (

@@ -12,6 +12,7 @@ import './App.css'
 import UserContext from '../../context/UserContext';
 import IdContext from '../../context/IdContext';
 import { getUser } from '../../actions/userActions';
+import { SocketProvider } from '../../context/Socket';
 
 function App() {
     // const location = useLocation();
@@ -45,20 +46,21 @@ function App() {
 
     return (
         <div className="app">
-            <UserContext.Provider value={providerValue}>
-                <IdContext.Provider value={providerId}>
-                    <Header />
-                    <Switch>
-                        <Route exact path="/" render={() => <Main messages={messages} setMessages={setMessages} demo={demo} />} />
-                        <Route exact path="/auth" component={Auth} />
-                        <Route exact path="/messages/:id" component={Friends} />
-                        <Route exact path="/users" component={Users} />
-                        <Route exact path="/about" render={() => <h1>About Us Page</h1>} />
-                    </Switch>
-                    {/* <button onClick={demo}>Click Me</button> */}
-                </IdContext.Provider>
-            </UserContext.Provider>
-
+            <SocketProvider id={id}>
+                <UserContext.Provider value={providerValue}>
+                    <IdContext.Provider value={providerId}>
+                        <Header />
+                        <Switch>
+                            <Route exact path="/" render={() => <Main messages={messages} setMessages={setMessages} demo={demo} />} />
+                            <Route exact path="/auth" component={Auth} />
+                            <Route exact path="/messages/:id" component={Friends} />
+                            <Route exact path="/users" component={Users} />
+                            <Route exact path="/about" render={() => <h1>About Us Page</h1>} />
+                        </Switch>
+                        {/* <button onClick={demo}>Click Me</button> */}
+                    </IdContext.Provider>
+                </UserContext.Provider>
+            </SocketProvider>
         </div>
     );
 }
