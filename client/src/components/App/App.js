@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Route, Switch } from 'react-router-dom';
-//useLocation if needed
+import { Route, Switch, useHistory, Redirect } from 'react-router-dom';
 
 import Header from '../Header';
 import Main from '../Main';
@@ -13,13 +12,15 @@ import UserContext from '../../context/UserContext';
 import IdContext from '../../context/IdContext';
 import { getUser } from '../../actions/userActions';
 import { SocketProvider } from '../../context/Socket';
+import ProtectedRoute from '../../context/ProtectedRoutes';
 
 function App() {
-    // const location = useLocation();
+
     const [messages, setMessages] = useState({});
     const [user, setUser] = useState(null);
     const [id, setId] = useState(null);
 
+    const history = useHistory();
     const providerValue = useMemo(() => ({ user, setUser }), [user, setUser]);
     const providerId = useMemo(() => ({ id, setId }), [id, setId]);
 
@@ -29,20 +30,14 @@ function App() {
                 setUser(data.name);
                 setId(data._id);
             });
-    }, []);
+    }, [user, id]);
 
     useEffect(() => {
-        demo();
-    }, []);
-
-    const demo = () => {
-        fetch('https://test-79aed.firebaseio.com/test/.json')
-            .then(res => res.json())
-            .then(data => {
-                setMessages(data);
-            })
-            .catch(err => console.log(err));
-    }
+        if(!user) {
+            Redirect('/auth');
+        }
+        console.log('history is changed');
+    }, [user, history]);
 
     return (
         <div className="app">
@@ -51,13 +46,13 @@ function App() {
                     <IdContext.Provider value={providerId}>
                         <Header />
                         <Switch>
-                            <Route exact path="/" render={() => <Main messages={messages} setMessages={setMessages} demo={demo} />} />
+                            <ProtectedRoute exact path="/" render={() => <Main messages={messages} setMessages={setMessages}  />} />
                             <Route exact path="/auth" component={Auth} />
-                            <Route exact path="/messages/:id" component={Friends} />
-                            <Route exact path="/users" component={Users} />
+                            <ProtectedRoute exact path="/messages/:id" component={Friends} />
+                            <ProtectedRoute exact path="/users" component={Users} />
                             <Route exact path="/about" render={() => <h1>About Us Page</h1>} />
+                            <Route path="*" component={() => "404 NOT FOUND"}/>
                         </Switch>
-                        {/* <button onClick={demo}>Click Me</button> */}
                     </IdContext.Provider>
                 </UserContext.Provider>
             </SocketProvider>

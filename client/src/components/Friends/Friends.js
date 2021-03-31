@@ -28,8 +28,6 @@ const Friends = ({ history, location }) => {
 
     const pathname = location.pathname;
 
-   
-
     useEffect(() => {
         (async () => {
             if (user) {
@@ -51,9 +49,6 @@ const Friends = ({ history, location }) => {
                     console.log(error);
                 }
                 setIsLoaded(true);
-            } else {
-                //is not working yet
-                // history.push('/auth');
             }
         })()
     }, [user, history]);
