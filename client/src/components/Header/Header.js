@@ -19,7 +19,7 @@ function Header() {
 
     return (
         <div className="header">
-            <NavLink to="/" exact activeClassName="used-link" exact className="header-child">Home</NavLink>
+            <NavLink to="/" exact activeClassName="used-link" className="header-child">Home</NavLink>
             <NavLink to="/contacts" exact activeClassName="used-link" className="header-child">Contact</NavLink>
             <NavLink to={{pathname: "/messages/:id", state: 'id'}} activeClassName="used-link" className="header-child">Friends</NavLink>
             <NavLink to="/users" exact activeClassName="used-link" className="header-child">Users</NavLink>

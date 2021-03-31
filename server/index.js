@@ -14,10 +14,12 @@ app.use(routes);
 io.on('connection', socket => {
     const id = socket.handshake.query.id;
     socket.join(id);
-    console.log(id);
+    
     socket.on('send-message', async ({ lastClicked, message }) => {
         const conversation = await sendMessage({userId: id, friendId: lastClicked, message});
-        console.log(conversation);
+
+        //it is not a good idea to get all messages every time...
+        // io.emit('receive-message', messages[messages.lenght - 1]);
         io.emit('receive-message', conversation.messages);
     })
 

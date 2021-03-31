@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useCallback } from 'react';
+import { useState, useEffect, useContext, Fragment } from 'react';
 
 import config from '../../config';
 
@@ -17,6 +17,8 @@ const Friends = ({ history, location }) => {
     const [messages, setMessages] = useState([]);
     const [isNewConversation, setIsNewConversation] = useState(false);
 
+    const [isLoaded, setIsLoaded] = useState(false)
+    
     const [lastClicked, setLastClicked] = useState(null);
 
     const { user } = useContext(UserContext);
@@ -26,23 +28,7 @@ const Friends = ({ history, location }) => {
 
     const pathname = location.pathname;
 
-    const sendMessages = useCallback((lastClicked, message) => {
-
-        fetch(`${config.BASE_URL}user/${id}/friend/${lastClicked}`, {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-            },
-            body: JSON.stringify({
-                message: message,
-            })
-        })
-            .then((res) => res.json())
-            .then(data => {
-                console.log(data)
-            })
-            .catch(err => console.log(err))
-    }, [setIsNewConversation])
+   
 
     useEffect(() => {
         (async () => {
@@ -64,41 +50,40 @@ const Friends = ({ history, location }) => {
                 } catch (error) {
                     console.log(error);
                 }
+                setIsLoaded(true);
             } else {
                 //is not working yet
                 // history.push('/auth');
             }
         })()
-
-    }, [user]);
+    }, [user, history]);
 
     useEffect(() => {
-        // Fetch at first for all conversations and on clicking on friend render current messages
-        // Find conversation by user ids and then move the logic in different file
         if (id && lastClicked) {
             history.push(`/messages/${lastClicked}`);
-            getMessages(id, lastClicked)
+            getMessages(id, lastClicked);
+            setMessage('');
         }
-
-
-    }, [lastClicked, pathname])
+    }, [lastClicked, pathname, history, id])
 
     const receiveMsg = (messages) => {
-        setMessages(messages)
+        setIsNewConversation(false);
+        setMessages(messages);
     }
+
     useEffect(() => {
         if (socket === undefined) return;
         socket.on('receive-message', receiveMsg);
 
-        // return () => {
-        //     console.log('Disconnect socket');
-        //     return socket.off('receive-message')
-        // };
+        return () => {
+            return socket.off('receive-message')
+        };
     }, [socket, lastClicked])
 
 
     const getMessages = (userId, friendId) => {
         // to deal with clicking already fetched friend
+
         fetch(`${config.BASE_URL}user/${userId}/friend/${friendId}`)
             .then(res => res.status === 200 ? res.json() : setMessages([]))
             .then(data => {
@@ -118,8 +103,8 @@ const Friends = ({ history, location }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if(message.length === 0) return //handle message
         socket.emit('send-message', { lastClicked, message })
-
         setMessage('');
     }
 
@@ -139,7 +124,7 @@ const Friends = ({ history, location }) => {
                     </div>
                 </div>
                 : <h3>There is no friends yet...</h3>
-            : <h1>You are not logged in! Add link to go to auth route!</h1>
+            : <Fragment>{isLoaded ? <h1>You are not logged in! Add link to go to auth route!</h1> : <h1>Loading...</h1>}</Fragment>
     )
 }
 
