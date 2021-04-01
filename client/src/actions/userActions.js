@@ -53,9 +53,15 @@ const getFriends = async () => {
     return await response.json();
 }
 
+const getMessages =  (userId, friendId) => 
+    fetch(`${config.BASE_URL}user/${userId}/friend/${friendId}`)
+        .then(res => res.status === 200 ? res.json() : null)
+        .catch(err => console.log(err));
+
 export {
     getUser,
     getAllUsers,
     addFriend,
-    getFriends
+    getFriends,
+    getMessages
 }

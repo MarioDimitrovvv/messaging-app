@@ -24,7 +24,7 @@ const Users = () => {
 
     return (
         users
-            ? users?.map(x => <User key={x._id} name={x.name} email={x.email} friends={friends} userId={x._id} />)
+            ? users.map(x => <User key={x._id} name={x.name} email={x.email} friends={friends} userId={x._id} />)
             : <div>There is no users...</div>
     )
 }

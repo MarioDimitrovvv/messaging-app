@@ -1,6 +1,4 @@
-import { useState, useEffect, Fragment } from 'react';
-
-import config from '../../config';
+import { useState, useEffect, Fragment, useCallback } from 'react';
 
 import Friend from './Friend';
 import Message from './Message';
@@ -9,7 +7,7 @@ import { useId } from '../../context/IdContext';
 import { useUser } from '../../context/UserContext';
 import { useSocket } from '../../context/Socket';
 
-import { getFriends } from '../../actions/userActions';
+import { getFriends, getMessages } from '../../actions/userActions';
 
 const Friends = ({ history, location }) => {
     const [friends, setFriends] = useState([]);
@@ -30,11 +28,10 @@ const Friends = ({ history, location }) => {
     useEffect(() => {
         (async () => {
             if (user) {
-                //move the logic
                 try {
                     const data = await getFriends();
                     const allFriends = data.friends;
-                    const firstFriend = allFriends[0]._id;
+                    const firstFriend = allFriends[0]?._id;
 
                     if (allFriends.length > 0) {
                         setFriends(allFriends);
@@ -55,42 +52,34 @@ const Friends = ({ history, location }) => {
     useEffect(() => {
         if (id && lastClicked) {
             history.push(`/messages/${lastClicked}`);
-            getMessages(id, lastClicked);
-            setMessage('');
-        }
-    }, [lastClicked, pathname, history, id])
-
-    const receiveMsg = (messages) => {
-        setIsNewConversation(false);
-        setMessages(messages);
-    }
-
-    useEffect(() => {
-        if (socket === undefined) return;
-        socket.on('receive-message', receiveMsg);
-
-        return () => {
-            return socket.off('receive-message')
-        };
-    }, [socket, lastClicked])
-
-
-    const getMessages = (userId, friendId) => {
-        // to deal with clicking already fetched friend
-        console.log(userId, friendId);
-        fetch(`${config.BASE_URL}user/${userId}/friend/${friendId}`)
-            .then(res => res.status === 200 ? res.json() : setMessages([]))
-            .then(data => {
+            // to deal with clicking already fetched friend
+            getMessages(id, lastClicked).then(data => {
                 if (data) {
                     setIsNewConversation(false);
                     setMessages(data);
                 } else {
                     setIsNewConversation(true);
+                    setMessages([]);
                 }
-            })
-            .catch(err => console.log(err));
-    }
+            });
+            setMessage('');
+        }
+    }, [lastClicked, pathname, history, id])
 
+    const receiveMsg = useCallback((messages) => {
+        isNewConversation && setIsNewConversation(false);
+        setMessages(messages);
+    }, [isNewConversation]);
+    
+    useEffect(() => {
+        if (socket === undefined) return;
+        socket.on('receive-message', receiveMsg);
+        
+        return () => {
+            return socket.off('receive-message')
+        };
+    }, [socket, lastClicked, receiveMsg])
+    
     const handleChange = (e) => {
         setMessage(e.target.value);
     }

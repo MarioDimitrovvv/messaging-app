@@ -24,7 +24,6 @@ const User = ({
         if (!isFriend) {
             addFriend(id, userId);
         }
-
         setIsFriend((prevIsFriend) => !prevIsFriend);
     }
 

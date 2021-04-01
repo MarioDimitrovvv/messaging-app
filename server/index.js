@@ -14,7 +14,7 @@ app.use(routes);
 io.on('connection', socket => {
     const id = socket.handshake.query.id;
     socket.join(id);
-    
+    console.log('new user joined');
     socket.on('send-message', async ({ lastClicked, message }) => {
         const conversation = await sendMessage({userId: id, friendId: lastClicked, message});
 

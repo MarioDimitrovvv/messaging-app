@@ -6,7 +6,6 @@ const Message = ({
     message,
     id
 }) => {
-
     sender === id ? classNames += ' sending' : classNames = 'message';
     
     return (
