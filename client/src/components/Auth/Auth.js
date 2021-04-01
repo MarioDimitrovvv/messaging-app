@@ -1,10 +1,9 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 
 import { login, register } from '../../actions/authActions';
 import { getUser } from '../../actions/userActions';
-import IdContext from '../../context/IdContext';
-import UserContext from '../../context/UserContext';
-// import UserContext from '../../context/UserContext';
+import { useId } from '../../context/IdContext';
+import { useUser } from '../../context/UserContext';
 
 import './Auth.scss';
 import AuthForm from './AuthForm/AuthForm';
@@ -16,9 +15,8 @@ const Auth = (props) => {
     const [isRegister, setIsRegister] = useState(false);
     const [formData, setFormData] = useState(baseFormData);
 
-    const { setUser } = useContext(UserContext);
-    const { setId } = useContext(IdContext);
-
+    const {setUser} = useUser();
+    const {setId} = useId();
     const onSubmitHandler = async (e) => {
         e.preventDefault();
         // Validate Inputs and send notification msg!!!

@@ -1,14 +1,14 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect } from 'react'
 import { getAllUsers, getFriends } from '../../actions/userActions';
-import UserContext from '../../context/UserContext';
+import { useUser } from '../../context/UserContext';
 import User from './User';
 
 const Users = () => {
     const [users, setUsers] = useState([]);
     const [friends, setFriends] = useState([]);
 
-    const { user } = useContext(UserContext);
-
+    const { user } = useUser();
+    
     useEffect(() => {
         (async () => {
             try {

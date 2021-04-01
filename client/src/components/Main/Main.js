@@ -1,5 +1,5 @@
-import { useState, useContext } from 'react';
-import UserContext from '../../context/UserContext';
+import { useState } from 'react';
+import { useUser } from '../../context/UserContext';
 
 import Message from '../Message';
 
@@ -7,8 +7,7 @@ const Main = ({ messages, setMessages, demo }) => {
 
     const [text, setText] = useState([]);
 
-    const { user } = useContext(UserContext);
-
+    const {user} = useUser();
 
     const sendMessage = () => {
         fetch('https://test-79aed.firebaseio.com/test.json', {

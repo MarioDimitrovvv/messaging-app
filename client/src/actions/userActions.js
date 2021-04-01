@@ -11,8 +11,8 @@ const getUser = async () => {
             'content-type': 'application/json',
         },
     });
-
-    return await response.json();
+    const user = await response.json();
+    return user;
 }
 
 const getAllUsers = async () => {

@@ -1,15 +1,15 @@
-import { useState, useEffect, useContext, Fragment } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 
 import config from '../../config';
 
 import Friend from './Friend';
 import Message from './Message';
 
-import IdContext from '../../context/IdContext';
-import UserContext from '../../context/UserContext';
+import { useId } from '../../context/IdContext';
+import { useUser } from '../../context/UserContext';
+import { useSocket } from '../../context/Socket';
 
 import { getFriends } from '../../actions/userActions';
-import { useSocket } from '../../context/Socket';
 
 const Friends = ({ history, location }) => {
     const [friends, setFriends] = useState([]);
@@ -18,12 +18,11 @@ const Friends = ({ history, location }) => {
     const [isNewConversation, setIsNewConversation] = useState(false);
 
     const [isLoaded, setIsLoaded] = useState(false)
-    
+
     const [lastClicked, setLastClicked] = useState(null);
 
-    const { user } = useContext(UserContext);
-    const { id } = useContext(IdContext);
-
+    const { user } = useUser();
+    const { id } = useId();
     const socket = useSocket();
 
     const pathname = location.pathname;
@@ -78,7 +77,7 @@ const Friends = ({ history, location }) => {
 
     const getMessages = (userId, friendId) => {
         // to deal with clicking already fetched friend
-
+        console.log(userId, friendId);
         fetch(`${config.BASE_URL}user/${userId}/friend/${friendId}`)
             .then(res => res.status === 200 ? res.json() : setMessages([]))
             .then(data => {
@@ -98,7 +97,7 @@ const Friends = ({ history, location }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(message.length === 0) return //handle message
+        if (message.length === 0) return //handle message
         socket.emit('send-message', { lastClicked, message })
         setMessage('');
     }
