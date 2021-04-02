@@ -19,13 +19,15 @@ async function register({ firstName, secondName, email, password, repeatPassword
         const user = new User({ firstName, secondName, name: `${firstName} ${secondName}`, email, password: hash });
 
         const newUser = await user.save();
-        
+        console.log(newUser);
+        return newUser;
     } catch (error) {
         console.log('Error from registration ' + error);   
     }
 }
 
 async function login(email, password) {
+    console.log(email);
     let user = await User.findOne({ email });
     if (!user) return { message: 'User not found!' };
 

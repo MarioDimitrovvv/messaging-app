@@ -23,7 +23,7 @@ router.post('/register', async (req, res) => {
     try {
         await register(req.body)
         const token = await login(req.body.email, req.body.password)
-        return res.status(200).json(token)
+        return res.status(200).json(token);
         
     } catch (err) {
         //send notification msg

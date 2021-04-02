@@ -12,6 +12,9 @@ const getAllUsers = async (currentUser) => {
 // * 
 
 const addUser = async ({ currentUser, addingUser }) => {
+    const isAlreadyFriend = await User.findOne({friends: addingUser});
+    if (isAlreadyFriend) return;
+    
     await User.findByIdAndUpdate(
         currentUser,
         { $push: { friends: addingUser } }

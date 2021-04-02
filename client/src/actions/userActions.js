@@ -24,8 +24,8 @@ const getAllUsers = async () => {
             'content-type': 'application/json',
         },
     });
-
-    return await response.json();
+    const users = await response.json();
+    return users.length === 0 ? null : users
 }
 
 const addFriend = async (id, userId) => {
