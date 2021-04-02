@@ -66,7 +66,7 @@ const Friends = ({ history, location }) => {
         }
     }, [lastClicked, pathname, history, id])
 
-    const receiveMsg = useCallback((messages) => {
+    const receiveMsg = useCallback(messages => {
         isNewConversation && setIsNewConversation(false);
         setMessages(messages);
     }, [isNewConversation]);
