@@ -1,4 +1,4 @@
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 import Header from '../Header';
 import Auth from '../Auth';
@@ -19,6 +19,7 @@ function App() {
             <SocketProvider id={id}>
                 <Header />
                 <Switch>
+                    <Route exact path="/" render={() => <Redirect to="/messages/:id" />} />
                     <ProtectedRoute exact path="/messages/:id" component={Friends} />
                     <ProtectedRoute exact path="/users" component={Users} />
                     <Route exact path="/about" render={() => <h1>About Us Page</h1>} />

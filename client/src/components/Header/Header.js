@@ -17,16 +17,14 @@ function Header() {
     }
 
     return (
-        <div className="header">
-            <NavLink to="/" exact activeClassName="used-link" className="header-child">Home</NavLink>
-            <NavLink to={{ pathname: "/messages/:id", state: 'id' }} activeClassName="used-link" className="header-child">Friends</NavLink>
-            <NavLink to="/users" exact activeClassName="used-link" className="header-child">Users</NavLink>
-            <NavLink to="/about" activeClassName="used-link" className="header-child">About</NavLink>
-            {user
-                ? <button onClick={handleLogout}>Logout</button>
-                : <NavLink to="/auth" activeClassName="used-link" className="header-child">Login</NavLink>
-            }
-        </div>
+        user
+            ? <div className="header">
+                <NavLink to={{ pathname: "/messages/:id", state: 'id' }} activeClassName="used-link" className="header-child">Friends</NavLink>
+                <NavLink to="/users" exact activeClassName="used-link" className="header-child">Users</NavLink>
+                <NavLink to="/about" activeClassName="used-link" className="header-child">About</NavLink>
+                <button onClick={handleLogout}>Logout</button>
+            </div>
+            : null
     );
 }
 

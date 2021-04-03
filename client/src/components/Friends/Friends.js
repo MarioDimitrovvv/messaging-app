@@ -1,7 +1,7 @@
 import { useState, useEffect, Fragment, useCallback } from 'react';
 
 import Friend from './Friend';
-import Message from './Message';
+import Chat from './Chat';
 
 import { useId } from '../../context/IdContext';
 import { useUser } from '../../context/UserContext';
@@ -61,7 +61,8 @@ const Friends = ({ history, location }) => {
                     setIsNewConversation(true);
                     setMessages([]);
                 }
-            });
+            })
+            .catch(err => console.log(err));
             setMessage('');
         }
     }, [lastClicked, pathname, history, id])
@@ -70,16 +71,16 @@ const Friends = ({ history, location }) => {
         isNewConversation && setIsNewConversation(false);
         setMessages(messages);
     }, [isNewConversation]);
-    
+
     useEffect(() => {
         if (socket === undefined) return;
         socket.on('receive-message', receiveMsg);
-        
+
         return () => {
             return socket.off('receive-message')
         };
     }, [socket, lastClicked, receiveMsg])
-    
+
     const handleChange = (e) => {
         setMessage(e.target.value);
     }
@@ -97,14 +98,14 @@ const Friends = ({ history, location }) => {
                 ?
                 <div>
                     {friends?.map(x => <Friend key={x._id} name={x.name} userId={x._id} onClick={setLastClicked} lastClicked={lastClicked} />)}
-                    <div className="chat-container">
-                        {isNewConversation ? <div>Start new conversation</div> : null}
-                        {messages.map(x => <Message key={x._id} sender={x.sender} message={x.message} id={id} />)}
-                        <form onSubmit={(e) => handleSubmit(e)}>
-                            <textarea className="text-container" onChange={handleChange} value={message} placeholder="Aa"></textarea>
-                            <input type="submit" value="Send" />
-                        </form>
-                    </div>
+                    <Chat
+                        isNewConversation={isNewConversation}
+                        messages={messages}
+                        message={message}
+                        id={id}
+                        handleChange={handleChange}
+                        handleSubmit={handleSubmit}
+                    />
                 </div>
                 : <h3>There is no friends yet...</h3>
             : <Fragment>{isLoaded ? <h1>You are not logged in! Add link to go to auth route!</h1> : <h1>Loading...</h1>}</Fragment>
