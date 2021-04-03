@@ -13,7 +13,7 @@ import ProtectedRoute from '../../context/ProtectedRoutes';
 function App() {
 
     const { id } = useId();
-
+    
     return (
         <div className="app">
             <SocketProvider id={id}>

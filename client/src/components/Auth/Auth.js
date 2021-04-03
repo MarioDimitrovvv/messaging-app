@@ -5,7 +5,6 @@ import { getUser } from '../../actions/userActions';
 import { useId } from '../../context/IdContext';
 import { useUser } from '../../context/UserContext';
 
-import './Auth.scss';
 import AuthForm from './AuthForm/AuthForm';
 
 const baseFormData = { firstName: '', secondName: '', email: '', password: '', repeatedPassword: '' }

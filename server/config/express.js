@@ -11,7 +11,8 @@ module.exports = (app) => {
     app.use(express.json());
     
     app.use(cors({
-        origin: 'http://localhost:3000',
+        // add domain origin
+        origin: ['http://localhost:3000', 'http://192.168.0.20:3000'],
         credentials: true,
     }));
     

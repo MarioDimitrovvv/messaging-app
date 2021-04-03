@@ -1,4 +1,7 @@
 import { Fragment } from "react"
+import { Button, Col, Container, Form, FormControl, InputGroup } from 'react-bootstrap'
+
+import './AuthForm.css'
 
 const AuthForm = ({
     onSubmitHandler,
@@ -9,44 +12,49 @@ const AuthForm = ({
     isRegister
 }) => {
     return (
-        <Fragment>
+        <Container className="auth-container">
             {isRegister ? <h1>Register/Sign Up</h1> : <h1>Login/Sign In</h1>}
-            <form onSubmit={(e) => onSubmitHandler(e)} className="go-bottom">
+            <Form onSubmit={(e) => onSubmitHandler(e)} className='auth-form'>
+                {isRegister && (
+                    <Form.Group>
+                        <Form.Label column="lg">Full Name</Form.Label>
+                        <Form.Row>
+                            <Col>
+                                <Form.Control name="firstName" onChange={handleChange} type="text" placeholder="First name" required />
+                            </Col>
+                            <Col>
+                                <Form.Control onChange={handleChange} type="text" name="secondName" placeholder="Second name" required />
+                            </Col>
+                        </Form.Row>
+                    </Form.Group>
+                )}
+                <Form.Group controlId="formGroupEmail">
+                    <Form.Label column="lg">Email address</Form.Label>
+                    <Form.Control type="email" name="email" onChange={handleChange} placeholder="Enter email" required />
+                </Form.Group>
+                <Form.Group controlId="formGroupPassword">
+                    <Form.Label column="lg">Password</Form.Label>
+                    <InputGroup className="mb-3">
+                        <FormControl type={showPassword ? "text" : "password"} name="password" onChange={handleChange} required placeholder="Password" />
+                        <InputGroup.Prepend>
+                            <InputGroup.Checkbox aria-label="Checkbox for following text input" onClick={handlePassword} />
+                        </InputGroup.Prepend>
+                    </InputGroup>
+                </Form.Group>
                 {isRegister && (
                     <Fragment>
-                        <div>
-                            <label htmlFor="firstName">First Name</label>
-                            <input id="firstName" name="firstName" onChange={handleChange} type="text" required />
-                        </div>
-                        <div>
-                            <label htmlFor="secondName">Second Name:</label>
-                            <input id="secondName" onChange={handleChange} type="text" name="secondName" required />
-                        </div>
+                        <Form.Group controlId="formGroupPassword">
+                            <Form.Label column="lg">Confirm Password</Form.Label>
+                            <Form.Control type={showPassword ? "text" : "password"} name="repeatPassword" onChange={handleChange} required placeholder="Repeated Password" />
+                        </Form.Group>
                     </Fragment>
                 )}
-                <div>
-                    <label htmlFor="email">Email</label>
-                    <input id="email" name="email" type="email" onChange={handleChange} required />
-                </div>
-                <div>
-                    <label htmlFor="password">Password</label>
-                    <input id="password" name="password" type={showPassword ? "text" : "password"} onChange={handleChange} required />
-                    <input className="checkBox" type="checkbox" onClick={handlePassword} />
-                </div>
-                {isRegister && (
-                    <Fragment>
-                        <div>
-                            <label htmlFor="secondName">Repeat Password</label>
-                            <input id="repeatedPassword" onChange={handleChange} type={showPassword ? "text" : "password"} name="repeatPassword" required />
-                        </div>
-                    </Fragment>
-                )}
-                <input type="submit" value="Submit" />
-            </form>
+                <Button as="input" variant="outline-dark" type="submit" value="Submit" />
+            </Form>
             <div onClick={handleIsRegister} className="isRegister">
                 If you {isRegister ? 'already' : 'don\'t'} have an accout click here!
             </div>
-        </Fragment>
+        </Container>
     )
 }
 

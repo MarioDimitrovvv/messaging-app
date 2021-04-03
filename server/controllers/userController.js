@@ -1,11 +1,12 @@
 const { Router } = require('express');
-const { getAllUsers, addUser, getFriends, getConversation, sendMessage } = require('../services/userServices');
+const { addUser, getFriends, getConversation, sendMessage } = require('../services/userServices');
 
 const auth = require('../middlewares/auth');
  
 const router = Router(); 
 
 router.post('/', auth, async (req, res) => {
+    console.log('try to connect');
     try {
         res.status(200).json({ ...res.locals.user });
     } catch (error) {

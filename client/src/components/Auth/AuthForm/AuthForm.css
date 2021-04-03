@@ -1,0 +1,14 @@
+.auth-container {
+    margin-top: 50px;
+}
+
+.auth-form {
+    margin: 30px;
+    display: inline-block;
+}
+
+.isRegister{
+    margin-top: 30px;
+    font-size: larger;
+    cursor: pointer;
+}
