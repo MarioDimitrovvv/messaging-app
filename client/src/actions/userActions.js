@@ -3,20 +3,22 @@ import config from '../config';
 const BASE_URL = config.BASE_URL;
 
 const getUser = async () => {
-    const response = await fetch(BASE_URL + 'user', {
-        method: 'POST',
+    const response = await fetch('http://192.168.0.20:8000/api/user', {
+        method: 'GET',
         mode: 'cors',
         credentials: 'include',
         headers: {
             'content-type': 'application/json',
+            'sec-fetch-site': 'none'
         },
     });
     const user = await response.json();
+    console.log(user);
     return user;
 }
 
 const getAllUsers = async () => {
-    const response = await fetch(BASE_URL + 'users/all', {
+    const response = await fetch('http://192.168.0.20:8000/api/users/all', {
         method: 'POST',
         mode: 'cors',
         credentials: 'include',
@@ -42,7 +44,7 @@ const addFriend = async (id, userId) => {
 }
 
 const getFriends = async () => {
-    const response = await fetch(BASE_URL + 'user/friends', {
+    const response = await fetch('http://192.168.0.20:8000/api/user/friends', {
         mode: 'cors',
         credentials: 'include',
         headers: {
@@ -54,7 +56,7 @@ const getFriends = async () => {
 }
 
 const getMessages =  (userId, friendId) => 
-    fetch(`${config.BASE_URL}user/${userId}/friend/${friendId}`)
+    fetch(`'http://192.168.0.20:8000/api/user/${userId}/friend/${friendId}`)
         .then(res => res.status === 200 ? res.json() : null)
         .catch(err => console.log(err));
 

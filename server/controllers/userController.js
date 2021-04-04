@@ -5,7 +5,7 @@ const auth = require('../middlewares/auth');
  
 const router = Router(); 
 
-router.post('/', auth, async (req, res) => {
+router.get('/', auth, async (req, res) => {
     console.log('try to connect');
     try {
         res.status(200).json({ ...res.locals.user });

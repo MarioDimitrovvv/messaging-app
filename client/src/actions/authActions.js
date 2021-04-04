@@ -8,7 +8,7 @@ const login = async (formData) => {
     const { email, password } = formData
 
     try {
-        const result = await fetch(BASE_URL + 'auth/login', {
+        const result = await fetch('http://192.168.0.20:8000/api/auth/login', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -20,6 +20,7 @@ const login = async (formData) => {
         })
         const token = await result.json();
         if (!token.message) {
+            console.log('get token');
             cookies.set(config.COOKIE, token, { path: '/' });
         }
 
@@ -41,7 +42,7 @@ const register = async (formData) => {
 
     try {
 
-        const result = await fetch(BASE_URL + 'auth/register', {
+        const result = await fetch('http://192.168.0.20:8000/api/auth/register', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',

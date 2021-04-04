@@ -30,5 +30,5 @@ io.on('connection', async socket => {
     // })
 })
 
-httpServer.listen(config.PORT);
+httpServer.listen(8000, '192.168.0.20');
 // app.listen(config.PORT, () => console.log(`Server is running on port http://localhost:${config.PORT}...`));

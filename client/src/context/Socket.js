@@ -11,7 +11,7 @@ export function SocketProvider({id, children}) {
     const [socket , setSocket] = useState();
 
     useEffect(() => {
-        const newSocket = io('http://localhost:4000', {transports: ['websocket'], query: { id } })
+        const newSocket = io('http://192.168.0.20:8000', {transports: ['websocket'], query: { id } })
 
         setSocket(newSocket);
         
