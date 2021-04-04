@@ -14,8 +14,12 @@ const Auth = (props) => {
     const [isRegister, setIsRegister] = useState(false);
     const [formData, setFormData] = useState(baseFormData);
 
-    const {setUser} = useUser();
+    const {user, setUser} = useUser();
     const {setId} = useId();
+
+    // may be better
+    user && props.history.push('/');
+
     const onSubmitHandler = async (e) => {
         e.preventDefault();
         // Validate Inputs and send notification msg!!!
