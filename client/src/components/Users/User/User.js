@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Button, ListGroup, Table } from 'react-bootstrap';
 import { addFriend } from '../../../actions/userActions';
 import { useId } from '../../../context/IdContext';
 import { useUser } from '../../../context/UserContext';
@@ -28,11 +29,20 @@ const User = ({
     }
 
     return (
-        <div className="user-container">
-            <div>Name: {name}</div>
-            <div>Email: {email}</div>
-            {user && <button onClick={() => handleFriendButton()} disabled={isFriend} >{isFriend ? 'Friend' : 'Add friend'}</button>}
-        </div>
+        // <ListGroup.Item >
+        //     <div class="d-flex bd-highlight mb-3">
+        //         <div className="p-2 bd-highlight">{name}</div>
+        //         <div className="p-2 bd-highlight">Email: {email}</div>
+        //         {user && <Button className="ml-auto p-2 bd-highlight" onClick={() => handleFriendButton()} disabled={isFriend} >{isFriend ? 'Friend' : 'Add friend'}</Button>}
+        //     </div>
+        // </ListGroup.Item>
+        <tbody>
+            <tr>
+                <td >{name}</td>
+                <td >{email}</td>
+                {user && <td ><Button onClick={() => handleFriendButton()} disabled={isFriend} >{isFriend ? 'Friend' : 'Add friend'}</Button></td>}
+            </tr>
+        </tbody>
     )
 }
 

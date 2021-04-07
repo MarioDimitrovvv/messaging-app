@@ -2,5 +2,5 @@
 .app {
   text-align: center;
   font-size: medium;
-  overflow-x: hidden;
+  overflow: hidden;
 }

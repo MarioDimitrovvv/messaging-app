@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { ListGroup, Table } from 'react-bootstrap';
 import { getAllUsers, getFriends } from '../../actions/userActions';
 import { useUser } from '../../context/UserContext';
 import User from './User';
@@ -8,7 +9,7 @@ const Users = () => {
     const [friends, setFriends] = useState([]);
 
     const { user } = useUser();
-    
+
     useEffect(() => {
         (async () => {
             try {
@@ -17,14 +18,17 @@ const Users = () => {
                 setUsers(users);
                 setFriends(friends.friends);
             } catch (error) {
-                console.log(error);                
+                console.log(error);
             }
         })()
     }, [user])
 
     return (
         users
-            ? users.map(x => <User key={x._id} name={x.name} email={x.email} friends={friends} userId={x._id} />)
+            ?
+            <Table responsive="sm">
+                {users.map(x => <User key={x._id} name={x.name} email={x.email} friends={friends} userId={x._id} />)}
+            </Table>
             : <div>There is no users...</div>
     )
 }
