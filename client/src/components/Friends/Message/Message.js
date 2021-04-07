@@ -16,7 +16,6 @@ const Message = ({
         xs = 4;
         isSender = 'message';
     }
-
     last ? isSender += ' last' : isSender += ' not-last';
     
     return (

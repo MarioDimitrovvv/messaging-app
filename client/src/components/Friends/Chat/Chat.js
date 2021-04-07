@@ -11,7 +11,6 @@ const Chat = ({
     id,
     handleChange,
     handleSubmit,
-    ref
 }) => {
     return (
         <div className="chat-container">
