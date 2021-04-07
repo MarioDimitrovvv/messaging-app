@@ -1,6 +1,6 @@
 import { useState, useEffect, Fragment, useCallback } from 'react';
 
-import { Col, ListGroup, Row, Tab } from 'react-bootstrap';
+import { Col, ListGroup, Row } from 'react-bootstrap';
 
 import Friend from './Friend';
 import Chat from './Chat';

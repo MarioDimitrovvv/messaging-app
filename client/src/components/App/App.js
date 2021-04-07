@@ -21,7 +21,7 @@ function App() {
                 <Switch>
                     <Route exact path="/" render={() => <Redirect to="/messages/:id" />} />
                     <ProtectedRoute exact path="/messages/:id" component={Friends} />
-                    <ProtectedRoute exact path="/users" component={Users} />
+                    <Route exact path="/users" component={Users} />
                     <Route exact path="/about" render={() => <h1>About Us Page</h1>} />
                     <Route exact path="/auth" component={Auth} />
                     <Route path="*" component={() => "404 NOT FOUND"} />

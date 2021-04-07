@@ -1,4 +1,4 @@
-import { Badge, Col, Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import './Message.css';
 
 let xs = 12;

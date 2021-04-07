@@ -1,0 +1,12 @@
+.friend-container {
+    text-align: justify;
+    padding: 35px;
+    font-size: large;
+    border: 1px solid black;
+    width: 530px;
+    margin-right: initial;
+}
+
+.last-clicked {
+    background-color: limegreen;
+}

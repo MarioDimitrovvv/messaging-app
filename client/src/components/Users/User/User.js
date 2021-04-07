@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Button, ListGroup, Table } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { addFriend } from '../../../actions/userActions';
 import { useId } from '../../../context/IdContext';
 import { useUser } from '../../../context/UserContext';
-import './User.scss';
 
 const User = ({
     name,

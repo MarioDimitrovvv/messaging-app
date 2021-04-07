@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { ListGroup, Table } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import { getAllUsers, getFriends } from '../../actions/userActions';
 import { useUser } from '../../context/UserContext';
 import User from './User';

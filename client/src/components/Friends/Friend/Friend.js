@@ -1,5 +1,5 @@
 import { ListGroup } from 'react-bootstrap';
-import './Friend.scss';
+import './Friend.css';
 
 const Friend = ({
     name,
