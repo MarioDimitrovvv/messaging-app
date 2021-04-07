@@ -1,0 +1,24 @@
+.scroller{
+    overflow-x: hidden;
+}
+
+.chat-container{
+    /* background-color: gray; */
+    /* position: relative; */
+    border: solid 1px black;
+    height: 85vh;
+}
+
+.messages {
+    /* position: absolute; */
+    /* display: inline-block; */
+    /* align-self: flex-end; */
+    justify-content: end;
+    bottom: 0;
+}
+
+.form{
+    position: absolute; 
+    bottom: 0;
+    width: 95%;
+}

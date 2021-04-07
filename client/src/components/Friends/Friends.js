@@ -1,5 +1,7 @@
 import { useState, useEffect, Fragment, useCallback } from 'react';
 
+import { Col, ListGroup, Row, Tab } from 'react-bootstrap';
+
 import Friend from './Friend';
 import Chat from './Chat';
 
@@ -62,7 +64,7 @@ const Friends = ({ history, location }) => {
                     setMessages([]);
                 }
             })
-            .catch(err => console.log(err));
+                .catch(err => console.log(err));
             setMessage('');
         }
     }, [lastClicked, pathname, history, id])
@@ -96,17 +98,25 @@ const Friends = ({ history, location }) => {
         user
             ? friends
                 ?
-                <div>
-                    {friends?.map(x => <Friend key={x._id} name={x.name} userId={x._id} onClick={setLastClicked} lastClicked={lastClicked} />)}
-                    <Chat
-                        isNewConversation={isNewConversation}
-                        messages={messages}
-                        message={message}
-                        id={id}
-                        handleChange={handleChange}
-                        handleSubmit={handleSubmit}
-                    />
-                </div>
+                <Fragment>
+                    <Row>
+                        <Col sm={4}>
+                            <ListGroup>
+                                {friends?.map(x => <Friend key={x._id} name={x.name} userId={x._id} onClick={setLastClicked} lastClicked={lastClicked} />)}
+                            </ListGroup>
+                        </Col>
+                        <Col sm={8} xl="8">
+                                <Chat
+                                    isNewConversation={isNewConversation}
+                                    messages={messages}
+                                    message={message}
+                                    id={id}
+                                    handleChange={handleChange}
+                                    handleSubmit={handleSubmit}
+                                />
+                        </Col>
+                    </Row>
+                </Fragment>
                 : <h3>There is no friends yet...</h3>
             : <Fragment>{isLoaded ? <h1>You are not logged in! Add link to go to auth route!</h1> : <h1>Loading...</h1>}</Fragment>
     )

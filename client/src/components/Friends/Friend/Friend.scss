@@ -11,25 +11,27 @@
     background-color: limegreen;
 }
 
-.chat-container {
-    background-color: lightgray;
-    margin-top: -310px;
-    margin-left: 530px;
-    width: 990px;
-    height: 550px;
-    .text-container {
-        resize: none;
-        margin-top: 250px;
-        width: 900px;
-        height: 100px;
-        margin-right: 400px;
-        display: inline-block;
-    }
-    input {
-        display: block;
-        width: 85px;
-        height: 100px;
-        margin-top: -105px;
-        margin-left: 900px;
-    }
-}
+// .chat-container {
+//     background-color: lightgray;
+//     overflow-y: auto;
+//     overflow-x:hidden;
+//     margin-top: -310px;
+//     margin-left: 530px;
+//     width: 990px;
+//     height: 550px;
+//     .text-container {
+//         resize: none;
+//         // margin-top: 250px;
+//         width: 800px;
+//         height: 100px;
+//         margin-right: 200px;
+//         display: inline-block;
+//     }
+//     input {
+//         display: block;
+//         width: 85px;
+//         height: 100px;
+//         margin-top: -105px;
+//         margin-left: 800px;
+//     }
+// }

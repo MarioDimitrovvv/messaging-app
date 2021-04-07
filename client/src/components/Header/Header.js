@@ -1,12 +1,10 @@
-import { NavLink } from 'react-router-dom';
-
-import { Container, Nav, Navbar, NavItem } from 'react-bootstrap';
+import { Nav, Navbar } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap'
 import { logout } from '../../actions/authActions';
 import { useUser } from '../../context/UserContext';
 import { useId } from '../../context/IdContext';
 
-import './Header.scss';
+import './Header.css';
 
 function Header() {
 
@@ -22,23 +20,22 @@ function Header() {
     return (
         user
             ?
-            // <Container >
-            <Navbar collapseOnSelect bg="dark" variant="dark" expand="lg">
-                <Navbar.Brand>Messagin App</Navbar.Brand>
-                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                <Navbar.Collapse id="responsive-navbar-nav">
+            <Navbar collapseOnSelect bg="dark" variant="dark" expand="lg" >
+                <Navbar.Brand className="logo">Messagin App</Navbar.Brand>
+                <Navbar.Toggle aria-controls="responsive-navbar-nav"  />
+                <Navbar.Collapse id="responsive-navbar-nav" className="header">
                     <Nav className="mr-auto">
-                        <Nav.Item>
+                        <Nav.Item className="navigation">
                             <LinkContainer to={{ pathname: "/messages/:id", state: 'id' }}>
                                 <Nav.Link >Friends</Nav.Link>
                             </LinkContainer>
                         </Nav.Item>
-                        <Nav.Item>
+                        <Nav.Item className="navigation">
                             <LinkContainer to="/users" exact activeClassName="used-link">
                                 <Nav.Link>Users</Nav.Link>
                             </LinkContainer>
                         </Nav.Item>
-                        <Nav.Item>
+                        <Nav.Item className="navigation">
                             <LinkContainer to="/about" activeClassName="used-link">
                                 <Nav.Link>About</Nav.Link>
                             </LinkContainer>
@@ -64,7 +61,6 @@ function Header() {
             //         </Nav.Item>
             //     </Nav>
             // </>
-            // </Container>
             : null
     );
 }

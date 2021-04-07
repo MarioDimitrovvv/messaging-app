@@ -1,22 +1,23 @@
+import { ListGroup } from 'react-bootstrap';
 import './Friend.scss';
 
-let classNames = 'friend-container'
 const Friend = ({
     name,
     userId,
     onClick,
     lastClicked
 }) => {
-    if(lastClicked === userId) {
-        classNames += ' last-clicked'
+    let variant = '';
+    if (lastClicked === userId) {
+        variant = 'info';
     } else {
-        classNames = 'friend-container'
+        variant = 'light';
     }
-    
+
     return (
-        <div className={classNames} onClick={() => onClick(userId)} >
-            <div>Name: {name}</div>
-        </div>
+        <ListGroup.Item onClick={() => onClick(userId)} variant={variant}>
+            Name: {name}
+        </ListGroup.Item>
     )
 }
 
