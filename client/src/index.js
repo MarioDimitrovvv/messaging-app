@@ -5,17 +5,21 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { IdProvider } from './context/IdContext';
 import { UserProvider } from './context/UserContext';
 
+
 import App from './components/App';
 
 import './index.css';
+import { AlertProvider } from './context/AlertContext';
 
 ReactDOM.render(
     <React.StrictMode>
         <UserProvider>
             <IdProvider>
-                <Router>
-                    <App />
-                </Router>
+                <AlertProvider>
+                    <Router>
+                        <App />
+                    </Router>
+                </AlertProvider>
             </IdProvider>
         </UserProvider>
     </React.StrictMode>,

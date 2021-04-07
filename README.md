@@ -57,11 +57,11 @@ Download all dependencies
 
 #### `npm start`
 
-Runs the app in the development mode.\
+Runs the server in the development mode.\
 
 #### `npm run prod`
 
-Runs the app in the production mode.\
+Runs the server in the production mode.\
 
 ## Learn More
 

@@ -1,9 +1,12 @@
 import { useState } from 'react';
+import { Alert } from 'react-bootstrap';
 
 import { login, register } from '../../actions/authActions';
 import { getUser } from '../../actions/userActions';
+import { useAlert } from '../../context/AlertContext';
 import { useId } from '../../context/IdContext';
 import { useUser } from '../../context/UserContext';
+import setNotification from '../../helpers/NotificationHandler';
 
 import AuthForm from './AuthForm/AuthForm';
 
@@ -14,8 +17,10 @@ const Auth = (props) => {
     const [isRegister, setIsRegister] = useState(false);
     const [formData, setFormData] = useState(baseFormData);
 
-    const {user, setUser} = useUser();
-    const {setId} = useId();
+    const { user, setUser } = useUser();
+    const { setId } = useId();
+    const { alert, setAlert } = useAlert();
+    // let [alert, setAlert] = useState(false)
 
     // may be better
     user && props.history.push('/');
@@ -52,6 +57,10 @@ const Auth = (props) => {
     const handlePassword = () => setShowPassword((prevShowPassword) => !prevShowPassword);
 
     const handleIsRegister = () => {
+        setAlert('Random Alert');
+        window.setInterval(() => {
+            setAlert(null);
+        }, 2000)
         setIsRegister((prevIsRegister) => !prevIsRegister);
         setFormData(baseFormData);
     };

@@ -1,6 +1,6 @@
 import { useState, useEffect, Fragment, useCallback } from 'react';
 
-import { Col, ListGroup, Row } from 'react-bootstrap';
+import { Alert, Col, ListGroup, Row } from 'react-bootstrap';
 
 import Friend from './Friend';
 import Chat from './Chat';
@@ -99,6 +99,7 @@ const Friends = ({ history, location }) => {
             ? friends
                 ?
                 <Fragment>
+                    <Alert variant="danger" dismissible onClose={() => console.log('closing alert')}>Some alert</Alert>
                     <Row>
                         <Col sm={4}>
                             <ListGroup>

@@ -9,15 +9,18 @@ import './App.css'
 import { useId } from '../../context/IdContext';
 import { SocketProvider } from '../../context/Socket';
 import ProtectedRoute from '../../context/ProtectedRoutes';
+import { useAlert } from '../../context/AlertContext';
+import { Alert } from 'react-bootstrap';
 
 function App() {
 
     const { id } = useId();
-    
+    const { alert } = useAlert();
     return (
         <div className="app">
             <SocketProvider id={id}>
                 <Header />
+                {alert && <Alert variant="danger">{alert}</Alert>}
                 <Switch>
                     <Route exact path="/" render={() => <Redirect to="/messages/:id" />} />
                     <ProtectedRoute exact path="/messages/:id" component={Friends} />
