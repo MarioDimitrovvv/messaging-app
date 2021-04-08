@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react'
 import { Table } from 'react-bootstrap';
+
 import { getAllUsers, getFriends } from '../../actions/userActions';
+
 import { useUser } from '../../context/UserContext';
+import { useAlert } from '../../context/AlertContext';
+
 import User from './User';
 
 const Users = () => {
@@ -9,19 +13,20 @@ const Users = () => {
     const [friends, setFriends] = useState([]);
 
     const { user } = useUser();
+    const { setAlert } = useAlert();
 
     useEffect(() => {
         (async () => {
             try {
-                const users = await getAllUsers()
+                const users = await getAllUsers();
                 const friends = await getFriends();
                 friends ? setFriends(friends.friends) : setFriends(null);
                 setUsers(users);
             } catch (error) {
-                console.log(error);
+                setAlert({ text: error.message, type: 'danger' })
             }
         })()
-    }, [user])
+    }, [user, setAlert])
 
     return (
         users

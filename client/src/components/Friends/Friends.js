@@ -1,6 +1,6 @@
 import { useState, useEffect, Fragment, useCallback } from 'react';
 
-import { Alert, Col, ListGroup, Row } from 'react-bootstrap';
+import { Col, ListGroup, Row } from 'react-bootstrap';
 
 import Friend from './Friend';
 import Chat from './Chat';
@@ -8,6 +8,7 @@ import Chat from './Chat';
 import { useId } from '../../context/IdContext';
 import { useUser } from '../../context/UserContext';
 import { useSocket } from '../../context/Socket';
+import { useAlert } from '../../context/AlertContext';
 
 import { getFriends, getMessages } from '../../actions/userActions';
 
@@ -24,6 +25,7 @@ const Friends = ({ history, location }) => {
     const { user } = useUser();
     const { id } = useId();
     const socket = useSocket();
+    const { setAlert } = useAlert();
 
     const pathname = location.pathname;
 
@@ -44,12 +46,12 @@ const Friends = ({ history, location }) => {
                     }
 
                 } catch (error) {
-                    console.log(error);
+                    setAlert({text: error.message, type: 'danger'});
                 }
                 setIsLoaded(true);
             }
         })()
-    }, [user, history]);
+    }, [user, history, setAlert]);
 
     useEffect(() => {
         if (id && lastClicked) {
@@ -64,10 +66,10 @@ const Friends = ({ history, location }) => {
                     setMessages([]);
                 }
             })
-                .catch(err => console.log(err));
+                .catch(err => setAlert({text: err.message, type: 'danger'}));
             setMessage('');
         }
-    }, [lastClicked, pathname, history, id])
+    }, [lastClicked, pathname, history, id, setAlert])
 
     const receiveMsg = useCallback(messages => {
         isNewConversation && setIsNewConversation(false);
@@ -89,7 +91,7 @@ const Friends = ({ history, location }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (message.length === 0) return //handle message
+        if (message.length === 0) return setAlert({text: 'Message should not be empty', type: 'dark'})
         socket.emit('send-message', { lastClicked, message })
         setMessage('');
     }

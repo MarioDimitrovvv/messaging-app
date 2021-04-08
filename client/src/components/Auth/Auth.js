@@ -44,6 +44,7 @@ const Auth = (props) => {
                 const data = await getUser();
                 setUser(data.name);
                 setId(data._id);
+                setAlert({text: 'Successfully logged in!', type: 'success'});
                 props.history.push('/users');
             } else {
                 setAlert({text: token.message, type: 'danger'});

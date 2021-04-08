@@ -26,6 +26,7 @@ const getAllUsers = async () => {
     });
     const users = await response.json();
     return users.length === 0 ? null : users
+
 }
 
 const addFriend = async (id, userId) => {
@@ -39,21 +40,26 @@ const addFriend = async (id, userId) => {
             addingUser: userId,
         })
     });
+
 }
 
 const getFriends = async () => {
-    const response = await fetch(BASE_URL + 'user/friends', {
-        mode: 'cors',
-        credentials: 'include',
-        headers: {
-            'content-type': 'application/json',
-        },
-    });
+    try {
+        const response = await fetch(BASE_URL + 'user/friends', {
+            mode: 'cors',
+            credentials: 'include',
+            headers: {
+                'content-type': 'application/json',
+            },
+        });
+        return await response.json();
+    } catch (error) {
+        return { message: error.message };
+    }
 
-    return await response.json();
 }
 
-const getMessages =  (userId, friendId) => 
+const getMessages = (userId, friendId) =>
     fetch(`${config.BASE_URL}user/${userId}/friend/${friendId}`)
         .then(res => res.status === 200 ? res.json() : null)
         .catch(err => console.log(err));

@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
+
 import { Button } from 'react-bootstrap';
+
 import { addFriend } from '../../../actions/userActions';
 import { useId } from '../../../context/IdContext';
 import { useUser } from '../../../context/UserContext';
+import { useAlert } from '../../../context/AlertContext';
 
 const User = ({
     name,
@@ -15,6 +18,7 @@ const User = ({
 
     const { user } = useUser();
     const { id } = useId();
+    const { setAlert } = useAlert();
 
     useEffect(() => {
         friends?.some(x => x.name === name) ? setIsFriend(true) : setIsFriend(false);
@@ -22,19 +26,13 @@ const User = ({
 
     const handleFriendButton = () => {
         if (!isFriend) {
-            addFriend(id, userId);
+            addFriend(id, userId)
+            .catch(err => setAlert({text: 'Cannot add the user...', type: 'danger'}));
         }
         setIsFriend((prevIsFriend) => !prevIsFriend);
     }
 
     return (
-        // <ListGroup.Item >
-        //     <div class="d-flex bd-highlight mb-3">
-        //         <div className="p-2 bd-highlight">{name}</div>
-        //         <div className="p-2 bd-highlight">Email: {email}</div>
-        //         {user && <Button className="ml-auto p-2 bd-highlight" onClick={() => handleFriendButton()} disabled={isFriend} >{isFriend ? 'Friend' : 'Add friend'}</Button>}
-        //     </div>
-        // </ListGroup.Item>
         <tbody>
             <tr>
                 <td >{name}</td>

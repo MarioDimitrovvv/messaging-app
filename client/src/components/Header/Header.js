@@ -3,6 +3,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { logout } from '../../actions/authActions';
 import { useUser } from '../../context/UserContext';
 import { useId } from '../../context/IdContext';
+import { useAlert } from '../../context/AlertContext';
 
 import './Header.css';
 
@@ -10,9 +11,11 @@ function Header() {
 
     const { user, setUser } = useUser();
     const { setId } = useId()
+    const {setAlert} = useAlert();
 
     const handleLogout = () => {
         logout();
+        setAlert({text: 'Successfully logged out!', type: 'success'})
         setUser(null);
         setId(null);
     }
