@@ -15,8 +15,8 @@ const Users = () => {
             try {
                 const users = await getAllUsers()
                 const friends = await getFriends();
+                friends ? setFriends(friends.friends) : setFriends(null);
                 setUsers(users);
-                setFriends(friends.friends);
             } catch (error) {
                 console.log(error);
             }

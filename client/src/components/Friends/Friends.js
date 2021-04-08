@@ -99,7 +99,6 @@ const Friends = ({ history, location }) => {
             ? friends
                 ?
                 <Fragment>
-                    <Alert variant="danger" dismissible onClose={() => console.log('closing alert')}>Some alert</Alert>
                     <Row>
                         <Col sm={4}>
                             <ListGroup>

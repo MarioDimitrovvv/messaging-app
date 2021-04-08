@@ -16,7 +16,7 @@ const Friend = ({
 
     return (
         <ListGroup.Item onClick={() => onClick(userId)} variant={variant}>
-            Name: {name}
+            {name}
         </ListGroup.Item>
     )
 }

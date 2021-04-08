@@ -17,7 +17,7 @@ const User = ({
     const { id } = useId();
 
     useEffect(() => {
-        friends.some(x => x.name === name) ? setIsFriend(true) : setIsFriend(false);
+        friends?.some(x => x.name === name) ? setIsFriend(true) : setIsFriend(false);
     }, [friends, user, name]);
 
     const handleFriendButton = () => {

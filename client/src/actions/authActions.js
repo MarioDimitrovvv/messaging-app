@@ -25,8 +25,7 @@ const login = async (formData) => {
 
         return token;
     } catch (error) {
-        // //validate and call notification msg
-        console.log(error);
+        return {message: error.message};
     }
 }
 
@@ -34,8 +33,6 @@ const register = async (formData) => {
     const { firstName, secondName, email, password, repeatPassword } = formData;
 
     if (password !== repeatPassword) {
-        console.log('Password Missmatch!');
-        //validate and call notification msg
         return;
     }
 

@@ -23,7 +23,7 @@ const AuthForm = ({
                                 <Form.Control name="firstName" onChange={handleChange} type="text" placeholder="First name" required />
                             </Col>
                             <Col>
-                                <Form.Control onChange={handleChange} type="text" name="secondName" placeholder="Second name" required />
+                                <Form.Control name="secondName" onChange={handleChange} type="text"placeholder="Second name" required />
                             </Col>
                         </Form.Row>
                     </Form.Group>

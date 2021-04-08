@@ -5,22 +5,24 @@ import Auth from '../Auth';
 import Users from '../Users';
 import Friends from '../Friends';
 
-import './App.css'
 import { useId } from '../../context/IdContext';
 import { SocketProvider } from '../../context/Socket';
 import ProtectedRoute from '../../context/ProtectedRoutes';
-import { useAlert } from '../../context/AlertContext';
-import { Alert } from 'react-bootstrap';
+import AlertSetter from '../AlertSetter';
+import useError from '../../hooks/useError';
+
+import './App.css'
 
 function App() {
 
     const { id } = useId();
-    const { alert } = useAlert();
+    const { ...alert } = useError();
+
     return (
         <div className="app">
             <SocketProvider id={id}>
                 <Header />
-                {alert && <Alert variant="danger">{alert}</Alert>}
+                {alert && <AlertSetter variant={alert.type} alert={alert.text}/>}
                 <Switch>
                     <Route exact path="/" render={() => <Redirect to="/messages/:id" />} />
                     <ProtectedRoute exact path="/messages/:id" component={Friends} />

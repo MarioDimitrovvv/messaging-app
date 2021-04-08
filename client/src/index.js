@@ -4,12 +4,11 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import { IdProvider } from './context/IdContext';
 import { UserProvider } from './context/UserContext';
-
+import { AlertProvider } from './context/AlertContext';
 
 import App from './components/App';
 
 import './index.css';
-import { AlertProvider } from './context/AlertContext';
 
 ReactDOM.render(
     <React.StrictMode>

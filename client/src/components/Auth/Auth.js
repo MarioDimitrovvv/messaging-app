@@ -1,12 +1,11 @@
-import { useState } from 'react';
-import { Alert } from 'react-bootstrap';
+import { Fragment, useState } from 'react';
 
 import { login, register } from '../../actions/authActions';
 import { getUser } from '../../actions/userActions';
 import { useAlert } from '../../context/AlertContext';
 import { useId } from '../../context/IdContext';
 import { useUser } from '../../context/UserContext';
-import setNotification from '../../helpers/NotificationHandler';
+import { validateInputs } from '../../helpers/validateInputs';
 
 import AuthForm from './AuthForm/AuthForm';
 
@@ -19,15 +18,20 @@ const Auth = (props) => {
 
     const { user, setUser } = useUser();
     const { setId } = useId();
-    const { alert, setAlert } = useAlert();
-    // let [alert, setAlert] = useState(false)
+    const { setAlert } = useAlert();
 
     // may be better
     user && props.history.push('/');
 
     const onSubmitHandler = async (e) => {
         e.preventDefault();
-        // Validate Inputs and send notification msg!!!
+
+        const isInvalid = validateInputs(formData, isRegister);
+        if(isInvalid) {
+            setAlert({text: isInvalid, type: 'danger'});
+            return;
+        }
+        // Validate on backend!!!
         try {
             let token = null;
             if (isRegister) {
@@ -42,14 +46,13 @@ const Auth = (props) => {
                 setId(data._id);
                 props.history.push('/users');
             } else {
-                console.log(token.message);
+                setAlert({text: token.message, type: 'danger'});
             }
         } catch (error) {
-            //Send notification msg
-            console.log(error);
+            setAlert({ text: error.message, type: 'danger' })
         }
-    }
 
+    }
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     }
@@ -57,23 +60,21 @@ const Auth = (props) => {
     const handlePassword = () => setShowPassword((prevShowPassword) => !prevShowPassword);
 
     const handleIsRegister = () => {
-        setAlert('Random Alert');
-        window.setInterval(() => {
-            setAlert(null);
-        }, 2000)
         setIsRegister((prevIsRegister) => !prevIsRegister);
         setFormData(baseFormData);
     };
 
     return (
-        <AuthForm
-            onSubmitHandler={onSubmitHandler}
-            handleChange={handleChange}
-            handlePassword={handlePassword}
-            handleIsRegister={handleIsRegister}
-            showPassword={showPassword}
-            isRegister={isRegister}
-        />
+        <Fragment>
+            <AuthForm
+                onSubmitHandler={onSubmitHandler}
+                handleChange={handleChange}
+                handlePassword={handlePassword}
+                handleIsRegister={handleIsRegister}
+                showPassword={showPassword}
+                isRegister={isRegister}
+            />
+        </Fragment>
     )
 }
 
