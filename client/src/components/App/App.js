@@ -5,6 +5,7 @@ import Auth from '../Auth';
 import Users from '../Users';
 import Friends from '../Friends';
 import About from '../About';
+import Footer from '../Footer';
 
 import { useId } from '../../context/IdContext';
 import { SocketProvider } from '../../context/Socket';
@@ -32,6 +33,7 @@ function App() {
                     <Route exact path="/auth" component={Auth} />
                     <Route path="*" component={() => "404 NOT FOUND"} />
                 </Switch>
+                <Footer />
             </SocketProvider>
         </div>
     );

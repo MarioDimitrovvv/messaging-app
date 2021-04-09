@@ -5,7 +5,7 @@
 .chat-container{
     /* position: relative; */
     border: solid 1px black;
-    height: 85vh;
+    height: 74vh;
 }
 
 .messages {
