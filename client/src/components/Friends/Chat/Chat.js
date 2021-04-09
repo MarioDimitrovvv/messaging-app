@@ -25,6 +25,8 @@ const Chat = ({
                             placeholder="Aa"
                             aria-label="Aa"
                             aria-describedby="basic-addon2"
+                            as="textarea"
+                            style={{resize: "none"}}
                             onChange={handleChange}
                             value={message}
                         />

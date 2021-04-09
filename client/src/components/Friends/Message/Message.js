@@ -2,13 +2,13 @@ import { Col, Row } from 'react-bootstrap';
 import './Message.css';
 
 let xs = 12;
-let isSender = 'message';
 const Message = ({
     sender,
     message,
     id,
     last
 }) => {
+    let isSender = 'message';
     if (sender === id) {
         xs = { offset: 8 };
         isSender += ' sending';
@@ -23,8 +23,7 @@ const Message = ({
         <Row>
             {sender === id && <Col sm={8}></Col>}
             <Col xs={xs} as="div" className={isSender}>
-                {/* <Badge className={isSender} pill variant='dark'>{message}</Badge> */}
-                {message}
+                {message.trim()}
             </Col>
         </Row>
     )

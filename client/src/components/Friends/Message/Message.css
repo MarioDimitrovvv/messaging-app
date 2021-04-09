@@ -1,31 +1,22 @@
 .message {
-    font-family: 'Times New Roman', Times, serif;    
+     font-family: 'Times New Roman', Times, serif;    
     font-weight: lighter;
     background-color: khaki;
     border-radius: 25px; 
-    margin: 5px 50px 5px 50px;
-    padding-top: 5px;
     box-sizing: content-box;
-    /* border: 1px dotted blue; */
-    width: 300px;
-    display: inline-block;
-    max-width: 250px;
-    /* padding: 10px; */
-    word-break: break-all; /* optional */
-    
-    height: 40px;
+    display: inline-block; 
+    margin: 5px 50px 5px 50px; 
     text-align: start;
-
-    /* margin-top: 20px;
-    width: 400px;
-    */
-    
+    word-break: break-word;
+    height:auto;
+    width: auto;
+    min-width: none;
+    min-height:35px;
 }
 
 .sending{
-    background-color: greenyellow;
-    text-align: end;
-
+     background-color: greenyellow; 
+     text-align: end; 
 }
 
 .last{

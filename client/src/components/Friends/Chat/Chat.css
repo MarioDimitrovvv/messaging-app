@@ -3,15 +3,12 @@
 }
 
 .chat-container{
-    /* position: relative; */
     border: solid 1px black;
     height: 74vh;
 }
 
 .messages {
-    /* position: absolute; */
-    /* display: inline-block; */
-    /* align-self: flex-end; */
+    position: relative;
     justify-content: end;
     bottom: 0;
 }
@@ -20,4 +17,5 @@
     position: absolute; 
     bottom: 0;
     width: 95%;
+    word-break: break-word;
 }
