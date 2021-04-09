@@ -1,7 +1,7 @@
 import config from '../config';
 
 const BASE_URL = config.BASE_URL;
-// to do
+
 const getUser = async () => {
     const response = await fetch(BASE_URL + 'user', {
         method: 'POST',

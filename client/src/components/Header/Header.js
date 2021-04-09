@@ -22,7 +22,7 @@ function Header() {
 
     return (
         <Navbar collapseOnSelect bg="dark" variant="dark" expand="lg" >
-            <Navbar.Brand className="logo">Messagin App</Navbar.Brand>
+            <Navbar.Brand className="logo">Messaging App</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav" className="header">
                 <Nav className="mr-auto">

@@ -19,9 +19,9 @@ const Users = () => {
         (async () => {
             try {
                 const users = await getAllUsers();
-                if (users.message) setAlert({ text: users.message, type: 'danger' })
+                if (users?.message) setAlert({ text: users.message, type: 'danger' })
                 const friends = await getFriends();
-                if (friends.message) setAlert({ text: friends.message, type: 'danger' })
+                if (friends?.message) setAlert({ text: friends.message, type: 'danger' })
                 friends ? setFriends(friends.friends) : setFriends(null);
                 setUsers(users);
             } catch (error) {
