@@ -27,7 +27,12 @@ const User = ({
     const handleFriendButton = () => {
         if (!isFriend) {
             addFriend(id, userId)
-            .catch(err => setAlert({text: 'Cannot add the user...', type: 'danger'}));
+            .then(data => {
+                if(data.message) setAlert({text: data.message, type: 'danger'})
+            })
+            .catch(err => {
+                setAlert({text: err, type: 'danger'})
+        });
         }
         setIsFriend((prevIsFriend) => !prevIsFriend);
     }

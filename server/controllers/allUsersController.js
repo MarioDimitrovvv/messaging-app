@@ -9,7 +9,7 @@ router.post('/all', auth, async (req, res) => {
     const currentUser = res.locals.user?._id;
     try {
         const allUsers = await getAllUsers(currentUser);
-        res.status(200).json(allUsers);
+        allUsers?.message ? res.json({message: allUsers.message}) : res.status(200).json(allUsers);
     } catch (error) {
         console.log(error.message);
         res.status(404).json({ message: 'Something went wrong!' });

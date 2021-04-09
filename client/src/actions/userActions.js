@@ -1,7 +1,7 @@
 import config from '../config';
 
 const BASE_URL = config.BASE_URL;
-
+// to do
 const getUser = async () => {
     const response = await fetch(BASE_URL + 'user', {
         method: 'POST',
@@ -26,11 +26,10 @@ const getAllUsers = async () => {
     });
     const users = await response.json();
     return users.length === 0 ? null : users
-
 }
 
 const addFriend = async (id, userId) => {
-    await fetch(BASE_URL + 'user/add', {
+    const response = await fetch(BASE_URL + 'user/add', {
         method: 'POST',
         headers: {
             'content-type': 'application/json',
@@ -41,6 +40,7 @@ const addFriend = async (id, userId) => {
         })
     });
 
+    return await response.json();
 }
 
 const getFriends = async () => {
@@ -62,7 +62,7 @@ const getFriends = async () => {
 const getMessages = (userId, friendId) =>
     fetch(`${config.BASE_URL}user/${userId}/friend/${friendId}`)
         .then(res => res.status === 200 ? res.json() : null)
-        .catch(err => console.log(err));
+        .catch(err => err);
 
 export {
     getUser,
