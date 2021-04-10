@@ -14,6 +14,10 @@ const AuthForm = ({
     return (
         <Container className="auth-container">
             {isRegister ? <h1>Register/Sign Up</h1> : <h1>Login/Sign In</h1>}
+            {/* Move at the bottom */}
+            <div onClick={handleIsRegister} className="isRegister">
+                If you {isRegister ? 'already' : 'don\'t'} have an accout click here!
+            </div>
             <Form onSubmit={(e) => onSubmitHandler(e)} className='auth-form'>
                 {isRegister && (
                     <Form.Group>
@@ -37,7 +41,7 @@ const AuthForm = ({
                     <InputGroup className="mb-3">
                         <FormControl type={showPassword ? "text" : "password"} name="password" onChange={handleChange} required placeholder="Password" />
                         <InputGroup.Prepend>
-                            <InputGroup.Checkbox aria-label="Checkbox for following text input" onClick={handlePassword} />
+                            <InputGroup.Checkbox onClick={() => handlePassword} />
                         </InputGroup.Prepend>
                     </InputGroup>
                 </Form.Group>
@@ -51,9 +55,7 @@ const AuthForm = ({
                 )}
                 <Button as="input" variant="outline-dark" type="submit" value="Submit" />
             </Form>
-            <div onClick={handleIsRegister} className="isRegister">
-                If you {isRegister ? 'already' : 'don\'t'} have an accout click here!
-            </div>
+            
         </Container>
     )
 }

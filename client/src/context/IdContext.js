@@ -12,7 +12,7 @@ export function IdProvider({children}) {
     const [isReady, setIsReady] = useState(false);
 
     const providerId = useMemo(() => ({ id, setId }), [id, setId]);
-    console.log('from id conterxt');
+    
     useEffect(() => {
         getUser()
             .then(data => {

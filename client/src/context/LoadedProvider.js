@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
 
 const LoadedContext = createContext(null); 
 
@@ -9,11 +9,6 @@ export function useLoading() {
 export function LoadedProvider({children}) {
     const [loaded, setLoaded] = useState(false);
     const providerLoaded = useMemo(() => ({ loaded, setLoaded }), [loaded, setLoaded]);
-    
-    console.log(loaded);
-    // useEffect(() => {
-    //     return () => setLoaded(false);
-    // }, [loaded, setLoaded])
     
     return (
         <LoadedContext.Provider value={providerLoaded}>

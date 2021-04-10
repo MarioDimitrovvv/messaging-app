@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { register, login } = require('../services/authServices');
+const { register, login, edit } = require('../services/authServices');
 
 const router = Router();
 
@@ -28,5 +28,15 @@ router.post('/register', async (req, res) => {
         
     }
 });
+
+router.post('/edit', async (req, res) => {
+    try {
+        const newToken = await edit(req.body);
+        res.status(201).json(newToken);
+    } catch (err) {
+        res.status(400).json({ message: error.message })
+        console.log('error is ' + error.message);
+    }
+})
 
 module.exports = router;

@@ -18,7 +18,6 @@ import Profile from '../Profile/Profile';
 import { useLoading } from '../../context/LoadedProvider';
 import { useEffect } from 'react';
 import { Spinner } from 'react-bootstrap';
-// import { LoadedProvider } from '../../context/LoadedProvider';
 
 function App() {
 
@@ -28,13 +27,15 @@ function App() {
 
     useEffect(() => {
         setLoaded(true);
-    }, [loaded])
+
+        return () => setLoaded(false);
+    }, [loaded, setLoaded])
     return (
         <div className="app">
             <SocketProvider id={id}>
                 <Header />
                 {alert && <AlertSetter variant={alert.type} alert={alert.text} />}
-                {/* {loaded ? */}
+                {loaded ?
                     <Switch>
                         <Route exact path="/" render={() => <Redirect to="/messages/:id" />} />
                         <ProtectedRoute exact path="/messages/:id" component={Friends} />
@@ -48,7 +49,7 @@ function App() {
                     <Spinner animation="border" role="status">
                         <span className="sr-only">Loading...</span>
                     </Spinner>
-                {/* } */}
+                }
                 <Footer />
             </SocketProvider>
         </div>

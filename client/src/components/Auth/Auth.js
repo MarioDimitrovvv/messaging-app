@@ -12,10 +12,10 @@ import AuthForm from './AuthForm/AuthForm';
 const baseFormData = { firstName: '', secondName: '', email: '', password: '', repeatedPassword: '' }
 
 const Auth = (props) => {
-    const [showPassword, setShowPassword] = useState(false);
     const [isRegister, setIsRegister] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState(baseFormData);
-
+    
     const { user, setUser } = useUser();
     const { setId } = useId();
     const { setAlert } = useAlert();
@@ -25,7 +25,6 @@ const Auth = (props) => {
 
     const onSubmitHandler = async (e) => {
         e.preventDefault();
-        
         const isInvalid = validateInputs(formData, isRegister);
         if(isInvalid) {
             setAlert({text: isInvalid, type: 'danger'});
@@ -52,8 +51,8 @@ const Auth = (props) => {
         } catch (error) {
             setAlert({ text: error.message, type: 'danger' })
         }
-
     }
+
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     }

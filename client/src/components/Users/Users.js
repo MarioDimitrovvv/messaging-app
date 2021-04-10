@@ -19,7 +19,6 @@ const Users = () => {
     useEffect(() => {
         (async () => {
             try {
-                console.log('from user asd');
                 const users = await getAllUsers();
                 const friends = await getFriends();
                 if (users?.message) setAlert({ text: users.message, type: 'danger' })
@@ -31,7 +30,7 @@ const Users = () => {
                 setAlert({ text: error.message, type: 'danger' })
             }
         })()
-    }, [user, setAlert])
+    }, [user, setAlert, setLoaded])
 
     return (
         users

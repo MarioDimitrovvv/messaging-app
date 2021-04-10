@@ -69,5 +69,5 @@ export {
     getAllUsers,
     addFriend,
     getFriends,
-    getMessages
+    getMessages,
 }

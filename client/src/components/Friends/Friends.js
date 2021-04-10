@@ -1,4 +1,4 @@
-import { useState, useEffect, Fragment, useCallback } from 'react';
+import { useState, useEffect, Fragment, useCallback, useRef } from 'react';
 
 import { Col, ListGroup, Row } from 'react-bootstrap';
 
@@ -18,8 +18,9 @@ const Friends = ({ history, location }) => {
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
     const [isNewConversation, setIsNewConversation] = useState(false);
+    const isMountedRef = useRef(null);
 
-    // const {loaded, setLoaded} = useLoading();
+    const { loaded, setLoaded } = useLoading();
 
     const [lastClicked, setLastClicked] = useState(null);
 
@@ -29,47 +30,55 @@ const Friends = ({ history, location }) => {
     const { setAlert } = useAlert();
 
     const pathname = location.pathname;
-
     useEffect(() => {
+        isMountedRef.current = true;
         (async () => {
             if (user) {
                 try {
                     const data = await getFriends();
-                    const allFriends = data.friends;
-                    const firstFriend = allFriends[0]?._id;
+                    if (isMountedRef.current) {
+                        const allFriends = data.friends;
+                        const firstFriend = allFriends[0]?._id;
 
-                    if (allFriends.length > 0) {
-                        setFriends(allFriends);
-                        setLastClicked(firstFriend);
-                        history.push(`/messages/${firstFriend}`);
-                    } else {
-                        setFriends(null);
+                        if (allFriends.length > 0) {
+                            setFriends(allFriends);
+                            setLastClicked(firstFriend);
+                            history.push(`/messages/${firstFriend}`);
+                        } else {
+                            setFriends(null);
+                        }
                     }
-
                 } catch (error) {
-                    setAlert({text: error.message, type: 'danger'});
+                    setAlert({ text: error.message, type: 'danger' });
                 }
-                // setLoaded(true);
+                setLoaded(true);
             }
         })()
-    }, [user, history, setAlert]);
+        return () => isMountedRef.current = false;
+    }, [user, history, setAlert, setLoaded]);
 
     useEffect(() => {
+        isMountedRef.current = true;
+
         if (id && lastClicked) {
             history.push(`/messages/${lastClicked}`);
             // to deal with clicking already fetched friend
             getMessages(id, lastClicked).then(data => {
-                if (data) {
-                    setIsNewConversation(false);
-                    setMessages(data);
-                } else {
-                    setIsNewConversation(true);
-                    setMessages([]);
+                if (isMountedRef.current) {
+                    if (data) {
+                        setIsNewConversation(false);
+                        setMessages(data);
+                    } else {
+                        setIsNewConversation(true);
+                        setMessages([]);
+                    }
                 }
             })
-                .catch(err => setAlert({text: err.message, type: 'danger'}));
+                .catch(err => setAlert({ text: err.message, type: 'danger' }));
             setMessage('');
         }
+
+        return () => isMountedRef.current = false;
     }, [lastClicked, pathname, history, id, setAlert])
 
     const receiveMsg = useCallback(messages => {
@@ -92,7 +101,7 @@ const Friends = ({ history, location }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (message.length === 0) return setAlert({text: 'Message should not be empty', type: 'dark'})
+        if (message.length === 0) return setAlert({ text: 'Message should not be empty', type: 'dark' })
         socket.emit('send-message', { lastClicked, message })
         setMessage('');
     }
@@ -109,19 +118,19 @@ const Friends = ({ history, location }) => {
                             </ListGroup>
                         </Col>
                         <Col sm={8} xl="8">
-                                <Chat
-                                    isNewConversation={isNewConversation}
-                                    messages={messages}
-                                    message={message}
-                                    id={id}
-                                    handleChange={handleChange}
-                                    handleSubmit={handleSubmit}
-                                />
+                            <Chat
+                                isNewConversation={isNewConversation}
+                                messages={messages}
+                                message={message}
+                                id={id}
+                                handleChange={handleChange}
+                                handleSubmit={handleSubmit}
+                            />
                         </Col>
                     </Row>
                 </Fragment>
                 : <h3>There is no friends yet...</h3>
-            : <Fragment>{true ? <h1>You are not logged in! Add link to go to auth route!</h1> : <h1>Loading...</h1>}</Fragment>
+            : <Fragment>{loaded ? <h1>You are not logged in! Add link to go to auth route!</h1> : <h1>Loading...</h1>}</Fragment>
     )
 }
 

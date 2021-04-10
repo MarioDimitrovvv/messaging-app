@@ -25,7 +25,7 @@ const login = async (formData) => {
 
         return token;
     } catch (error) {
-        return {message: error.message};
+        return { message: error.message };
     }
 }
 
@@ -64,9 +64,39 @@ const logout = () => {
     cookies.remove(config.COOKIE, { path: '/' });
 }
 
+const editUser = async ({ firstName, secondName, email, id }) => {
+    try {
+        const result = await fetch(`${BASE_URL}auth/edit`, {
+            method: 'POST',
+            mode: 'cors',
+            credentials: 'include',
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify({
+                firstName,
+                secondName,
+                email,
+                id
+            })
+        });
+
+        const token = await result.json();
+        if (!token.message) {
+            cookies.remove(config.COOKIE, { path: '/' });
+            cookies.set(config.COOKIE, token, { path: '/' });
+            return token;
+        } else {
+            return { message: token.message}
+        }
+    } catch (error) {
+        return { message: error.message };
+    }
+}
 
 export {
     login,
     register,
     logout,
+    editUser
 }

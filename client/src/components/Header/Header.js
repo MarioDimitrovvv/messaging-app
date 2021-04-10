@@ -6,16 +6,17 @@ import { useId } from '../../context/IdContext';
 import { useAlert } from '../../context/AlertContext';
 
 import './Header.css';
+import { Fragment } from 'react';
 
 function Header() {
 
     const { user, setUser } = useUser();
     const { setId } = useId()
-    const {setAlert} = useAlert();
+    const { setAlert } = useAlert();
 
     const handleLogout = () => {
         logout();
-        setAlert({text: 'Successfully logged out!', type: 'success'})
+        setAlert({ text: 'Successfully logged out!', type: 'success' })
         setUser(null);
         setId(null);
     }
@@ -26,21 +27,25 @@ function Header() {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav" className="header">
                 <Nav className="mr-auto">
-                    {user && <Nav.Item className="navigation">
-                        <LinkContainer to={{ pathname: "/messages/:id", state: 'id' }}>
-                            <Nav.Link >Friends</Nav.Link>
-                        </LinkContainer>
-                    </Nav.Item>}
+                    {user &&
+                        <Fragment>
+                            <Nav.Item className="navigation">
+                                <LinkContainer to={{ pathname: "/messages/:id", state: 'id' }}>
+                                    <Nav.Link >Friends</Nav.Link>
+                                </LinkContainer>
+                            </Nav.Item>
+                            <Nav.Item className="navigation">
+                                <LinkContainer to="/profile" exact activeClassName="used-link">
+                                    <Nav.Link>Profile</Nav.Link>
+                                </LinkContainer>
+                            </Nav.Item>
+                        </Fragment>}
                     <Nav.Item className="navigation">
                         <LinkContainer to="/users" exact activeClassName="used-link">
                             <Nav.Link>Users</Nav.Link>
                         </LinkContainer>
                     </Nav.Item>
-                    <Nav.Item className="navigation">
-                        <LinkContainer to="/profile" exact activeClassName="used-link">
-                            <Nav.Link>Profile</Nav.Link>
-                        </LinkContainer>
-                    </Nav.Item>
+
                     <Nav.Item className="navigation">
                         <LinkContainer to="/about" activeClassName="used-link">
                             <Nav.Link>About</Nav.Link>
