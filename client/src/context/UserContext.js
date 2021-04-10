@@ -1,21 +1,23 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { getUser } from '../actions/userActions';
 
-const UserContext = createContext(null); 
+const UserContext = createContext(null);
 
 export function useUser() {
     return useContext(UserContext);
 }
 
-export function UserProvider({children}) {
+export function UserProvider({ children }) {
     const [user, setUser] = useState();
+    const [userInfo, setUserInfo] = useState();
     const [isReady, setIsReady] = useState(false);
 
-    const providerUser = useMemo(() => ({ user, setUser }), [user, setUser]);
-
+    const providerUser = useMemo(() => ({ user, setUser, userInfo }), [user, setUser, userInfo]);
+    
     useEffect(() => {
         getUser()
             .then(data => {
+                setUserInfo(data);
                 setUser(data.name);
                 setIsReady(true);
             })
@@ -28,4 +30,4 @@ export function UserProvider({children}) {
             {children}
         </UserContext.Provider>
     )
-}; 
+};

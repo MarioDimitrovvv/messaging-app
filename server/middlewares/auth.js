@@ -12,30 +12,8 @@ module.exports = (req, res, next) => {
             } else {
                 req.user = decoded;
                 res.locals.user = decoded;
-                res.locals.isAuthenticated = true;
             }
         })
     }
     next();
 }
-
-// module.exports = function() {
-//     return (req, res, next) => {
-//         const token = req.cookies[COOKIE];
-
-//         console.log(token);
-
-//         if(token) {
-//             jwt.verify(token, SECRET, (err, decoded) => {
-//                 if(err) {
-//                     res.clearCookie(COOKIE);
-//                 } else {
-//                     req.user = decoded;
-//                     res.locals.user = decoded;
-//                     res.locals.isAuthenticated = true;
-//                 }
-//             })
-//         }
-//         next();
-//     }
-// }

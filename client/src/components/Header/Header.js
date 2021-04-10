@@ -37,6 +37,11 @@ function Header() {
                         </LinkContainer>
                     </Nav.Item>
                     <Nav.Item className="navigation">
+                        <LinkContainer to="/profile" exact activeClassName="used-link">
+                            <Nav.Link>Profile</Nav.Link>
+                        </LinkContainer>
+                    </Nav.Item>
+                    <Nav.Item className="navigation">
                         <LinkContainer to="/about" activeClassName="used-link">
                             <Nav.Link>About</Nav.Link>
                         </LinkContainer>

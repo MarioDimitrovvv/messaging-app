@@ -14,6 +14,7 @@ import AlertSetter from '../AlertSetter';
 import useError from '../../hooks/useError';
 
 import './App.css'
+import Profile from '../Profile/Profile';
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
                     <Route exact path="/" render={() => <Redirect to="/messages/:id" />} />
                     <ProtectedRoute exact path="/messages/:id" component={Friends} />
                     <Route exact path="/users" component={Users} />
+                    <ProtectedRoute exact path="/profile" component={Profile} />
                     <Route exact path="/about" component={About} />
                     <Route exact path="/auth" component={Auth} />
                     <Route path="*" component={() => "404 NOT FOUND"} />
