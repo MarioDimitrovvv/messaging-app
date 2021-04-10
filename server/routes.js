@@ -5,7 +5,7 @@ const allUsersController = require('./controllers/allUsersController');
 const authController = require('./controllers/authController');
 
 const router = Router();
-
+console.log('getting req');
 router.use('/api/user', userController);
 router.use('/api/users', allUsersController);
 router.use('/api/auth', authController);

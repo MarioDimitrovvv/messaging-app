@@ -5,7 +5,7 @@ const About = () => {
         <Jumbotron fluid>
             <Container>
                 <h1>About Messaging App</h1>
-                <hr class="my-4"></hr>
+                <hr className="my-4"></hr>
                 <h5 className="mt-20">
                     Messaging App is place where you can chat with your friends and maybe make new ones. :)
                 </h5>

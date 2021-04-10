@@ -25,7 +25,7 @@ const Auth = (props) => {
 
     const onSubmitHandler = async (e) => {
         e.preventDefault();
-
+        
         const isInvalid = validateInputs(formData, isRegister);
         if(isInvalid) {
             setAlert({text: isInvalid, type: 'danger'});

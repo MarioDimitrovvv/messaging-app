@@ -8,21 +8,19 @@ export function useUser() {
 }
 
 export function UserProvider({ children }) {
-    const [user, setUser] = useState();
-    const [userInfo, setUserInfo] = useState();
+    const [user, setUser] = useState(null);
     const [isReady, setIsReady] = useState(false);
 
-    const providerUser = useMemo(() => ({ user, setUser, userInfo }), [user, setUser, userInfo]);
+    const providerUser = useMemo(() => ({ user, setUser }), [user, setUser]);
     
     useEffect(() => {
         getUser()
             .then(data => {
-                setUserInfo(data);
                 setUser(data.name);
                 setIsReady(true);
             })
             .catch(err => console.log(err));
-    }, [user]);
+    }, [user, setUser]);
 
     return (
         isReady &&

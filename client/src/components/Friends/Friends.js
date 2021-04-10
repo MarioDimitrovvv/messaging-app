@@ -11,6 +11,7 @@ import { useSocket } from '../../context/Socket';
 import { useAlert } from '../../context/AlertContext';
 
 import { getFriends, getMessages } from '../../actions/userActions';
+import { useLoading } from '../../context/LoadedProvider';
 
 const Friends = ({ history, location }) => {
     const [friends, setFriends] = useState([]);
@@ -18,7 +19,7 @@ const Friends = ({ history, location }) => {
     const [messages, setMessages] = useState([]);
     const [isNewConversation, setIsNewConversation] = useState(false);
 
-    const [isLoaded, setIsLoaded] = useState(false)
+    // const {loaded, setLoaded} = useLoading();
 
     const [lastClicked, setLastClicked] = useState(null);
 
@@ -48,7 +49,7 @@ const Friends = ({ history, location }) => {
                 } catch (error) {
                     setAlert({text: error.message, type: 'danger'});
                 }
-                setIsLoaded(true);
+                // setLoaded(true);
             }
         })()
     }, [user, history, setAlert]);
@@ -120,7 +121,7 @@ const Friends = ({ history, location }) => {
                     </Row>
                 </Fragment>
                 : <h3>There is no friends yet...</h3>
-            : <Fragment>{isLoaded ? <h1>You are not logged in! Add link to go to auth route!</h1> : <h1>Loading...</h1>}</Fragment>
+            : <Fragment>{true ? <h1>You are not logged in! Add link to go to auth route!</h1> : <h1>Loading...</h1>}</Fragment>
     )
 }
 

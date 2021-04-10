@@ -3,7 +3,6 @@ import { useUser } from "./UserContext";
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
     const { user } = useUser();
-    
     return (
         <Route {...rest} render={(props) => (
             user

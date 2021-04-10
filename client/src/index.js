@@ -9,15 +9,18 @@ import { AlertProvider } from './context/AlertContext';
 import App from './components/App';
 
 import './index.css';
+import { LoadedProvider } from './context/LoadedProvider';
 
 ReactDOM.render(
     <React.StrictMode>
         <UserProvider>
             <IdProvider>
                 <AlertProvider>
-                    <Router>
-                        <App />
-                    </Router>
+                    <LoadedProvider>
+                        <Router>
+                            <App />
+                        </Router>
+                    </LoadedProvider>
                 </AlertProvider>
             </IdProvider>
         </UserProvider>

@@ -7,6 +7,7 @@ import { useUser } from '../../context/UserContext';
 import { useAlert } from '../../context/AlertContext';
 
 import User from './User';
+import { useLoading } from '../../context/LoadedProvider';
 
 const Users = () => {
     const [users, setUsers] = useState([]);
@@ -14,16 +15,18 @@ const Users = () => {
 
     const { user } = useUser();
     const { setAlert } = useAlert();
-
+    const {setLoaded} = useLoading();
     useEffect(() => {
         (async () => {
             try {
+                console.log('from user asd');
                 const users = await getAllUsers();
-                if (users?.message) setAlert({ text: users.message, type: 'danger' })
                 const friends = await getFriends();
+                if (users?.message) setAlert({ text: users.message, type: 'danger' })
                 if (friends?.message) setAlert({ text: friends.message, type: 'danger' })
-                friends ? setFriends(friends.friends) : setFriends(null);
                 setUsers(users);
+                friends ? setFriends(friends.friends) : setFriends(null);
+                setLoaded(true);
             } catch (error) {
                 setAlert({ text: error.message, type: 'danger' })
             }
