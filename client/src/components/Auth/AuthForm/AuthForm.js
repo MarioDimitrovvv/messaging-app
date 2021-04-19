@@ -27,7 +27,7 @@ const AuthForm = ({
                                 <Form.Control name="firstName" onChange={handleChange} type="text" placeholder="First name" required />
                             </Col>
                             <Col>
-                                <Form.Control name="secondName" onChange={handleChange} type="text"placeholder="Second name" required />
+                                <Form.Control name="secondName" onChange={handleChange} type="text" placeholder="Second name" required />
                             </Col>
                         </Form.Row>
                     </Form.Group>
@@ -41,7 +41,7 @@ const AuthForm = ({
                     <InputGroup className="mb-3">
                         <FormControl type={showPassword ? "text" : "password"} name="password" onChange={handleChange} required placeholder="Password" />
                         <InputGroup.Prepend>
-                            <InputGroup.Checkbox onClick={() => handlePassword} />
+                            <InputGroup.Checkbox onClick={handlePassword} />
                         </InputGroup.Prepend>
                     </InputGroup>
                 </Form.Group>

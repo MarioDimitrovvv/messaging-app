@@ -17,7 +17,6 @@ export function UserProvider({ children }) {
     useEffect(() => {
         getUser()
             .then(data => {
-                console.log(data);
                 setUser(data.name);
                 setEmail(data.email);
                 setIsReady(true);

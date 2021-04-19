@@ -16,18 +16,19 @@ io.on('connection', async socket => {
     socket.join(id);
     socket.on('send-message', async ({ lastClicked, message }) => {
         try {
-            const conversation = await sendMessage({userId: id, friendId: lastClicked, message});
+            const conversation = await sendMessage({ userId: id, friendId: lastClicked, message });
             //it is not a good idea to get all messages every time...
             // io.emit('receive-message', messages[messages.lenght - 1]);
             io.emit('receive-message', conversation.messages, socket.id);
         } catch (error) {
-            console.log(error);            
+            console.log(error);
         }
+
+        // socket.on('disconnect', () => {
+        //     console.log(id + ' left the room');
+        // })
     });
 
-    // socket.on('disconnect', () => {
-    //     console.log(id + ' left the room');
-    // })
 })
 
 httpServer.listen(config.PORT);

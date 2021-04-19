@@ -1,7 +1,7 @@
 import { Fragment, useState } from 'react';
 
 import { login, register } from '../../actions/authActions';
-import { getUser } from '../../actions/userActions';
+
 import { useAlert } from '../../context/AlertContext';
 import { useId } from '../../context/IdContext';
 import { useUser } from '../../context/UserContext';
@@ -15,19 +15,20 @@ const Auth = (props) => {
     const [isRegister, setIsRegister] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState(baseFormData);
-    
-    const { user, setUser } = useUser();
+
+    const { setUser } = useUser();
+    // const { user, setUser } = useUser();
     const { setId } = useId();
     const { setAlert } = useAlert();
 
-    // may be better
-    user && props.history.push('/');
+    // may be better here is the mistake
+    // user && props.history.push('/');
 
     const onSubmitHandler = async (e) => {
         e.preventDefault();
         const isInvalid = validateInputs(formData, isRegister);
-        if(isInvalid) {
-            setAlert({text: isInvalid, type: 'danger'});
+        if (isInvalid) {
+            setAlert({ text: isInvalid, type: 'danger' });
             return;
         }
         // Validate on backend!!!
@@ -40,13 +41,12 @@ const Auth = (props) => {
             }
 
             if (!token.message) {
-                const data = await getUser();
-                setUser(data.name);
-                setId(data._id);
-                setAlert({text: 'Successfully logged in!', type: 'success'});
+                setUser('trigger');
+                setId('trigger');
+                setAlert({ text: 'Successfully logged in!', type: 'success' });
                 props.history.push('/users');
             } else {
-                setAlert({text: token.message, type: 'danger'});
+                setAlert({ text: token.message, type: 'danger' });
             }
         } catch (error) {
             setAlert({ text: error.message, type: 'danger' })
