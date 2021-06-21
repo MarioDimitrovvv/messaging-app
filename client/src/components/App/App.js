@@ -30,6 +30,7 @@ function App() {
 
         return () => setLoaded(false);
     }, [loaded, setLoaded])
+    
     return (
         <div className="app">
             <SocketProvider id={id}>
