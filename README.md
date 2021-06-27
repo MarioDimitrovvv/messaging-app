@@ -2,6 +2,9 @@
 
 ## This is app for chatting with all of your friends in Realtime and maybe make some new friends :)
 
+## Tech stack:
+<img src="https://i.ibb.co/4JKj4t6/mern-stack.png" alt="mern-stack"/>
+
 ## How to run the server
 
 ### `cd server`
