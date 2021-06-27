@@ -17,12 +17,8 @@ const Auth = (props) => {
     const [formData, setFormData] = useState(baseFormData);
 
     const { setUser } = useUser();
-    // const { user, setUser } = useUser();
     const { setId } = useId();
     const { setAlert } = useAlert();
-
-    // may be better here is the mistake
-    // user && props.history.push('/');
 
     const onSubmitHandler = async (e) => {
         e.preventDefault();
@@ -31,7 +27,6 @@ const Auth = (props) => {
             setAlert({ text: isInvalid, type: 'danger' });
             return;
         }
-        // Validate on backend!!!
         try {
             let token = null;
             if (isRegister) {

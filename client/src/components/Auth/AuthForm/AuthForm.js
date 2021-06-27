@@ -14,7 +14,6 @@ const AuthForm = ({
     return (
         <Container className="auth-container">
             {isRegister ? <h1>Register/Sign Up</h1> : <h1>Login/Sign In</h1>}
-            {/* Move at the bottom */}
             <div onClick={handleIsRegister} className="isRegister">
                 If you {isRegister ? 'already' : 'don\'t'} have an accout click here!
             </div>

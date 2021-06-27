@@ -9,6 +9,8 @@
 
 .isRegister{
     margin-top: 30px;
+    display: table;
+    margin-left: 35%;
     font-size: larger;
     cursor: pointer;
 }
