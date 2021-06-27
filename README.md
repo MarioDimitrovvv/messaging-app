@@ -1,6 +1,6 @@
 # Messagin App
 
-## This is app for chatting with all of your friends and maybe make some new friends :)
+## This is app for chatting with all of your friends in Realtime and maybe make some new friends :)
 
 ## How to run the server
 
